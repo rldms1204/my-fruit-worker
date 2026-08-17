@@ -1,0 +1,31 @@
+name: Kimssine Auto Order
+
+on:
+  schedule:
+    # 한국시간 기준 매일 오전 10:00, 오후 15:00에 실행
+    - cron: '0 1,6 * * *'
+  workflow_dispatch: # 사장님이 수동으로 '실행' 버튼을 누를 수도 있게 함
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 코드 가져오기
+        uses: actions/checkout@v3
+
+      - name: 파이썬 설치
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 필요한 도구 설치
+        run: pip install requests pandas
+
+      - name: 로봇 비서 실행
+        env:
+          COUPANG_ACCESS_KEY: ${{ secrets.COUPANG_ACCESS_KEY }}
+          COUPANG_SECRET_KEY: ${{ secrets.COUPANG_SECRET_KEY }}
+          COUPANG_SELLER_ID: ${{ secrets.COUPANG_SELLER_ID }}
+          ADMINPLUS_CLIENT_ID: ${{ secrets.ADMINPLUS_CLIENT_ID }}
+          ADMINPLUS_CLIENT_SECRET: ${{ secrets.ADMINPLUS_CLIENT_SECRET }}
+        run: python auto_run.py
