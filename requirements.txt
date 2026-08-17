@@ -1,2 +1,24 @@
-gspread
-oauth2client
+# === 브라우저 자동화 ===
+playwright>=1.40.0
+
+# === AI / 카피 생성 ===
+google-genai>=1.0.0
+
+# === 데이터 처리 ===
+pandas>=2.0.0
+openpyxl>=3.1.0
+
+# === 데이터 검증 ===
+pydantic>=2.0.0
+
+# === 템플릿 렌더링 ===
+Jinja2>=3.1.0
+
+# === UI 대시보드 ===
+streamlit>=1.30.0
+
+# === 설정 관리 ===
+PyYAML>=6.0.0
+
+# === 스케줄링 (Phase 4) ===
+schedule>=1.2.0

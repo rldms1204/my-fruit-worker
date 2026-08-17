@@ -7,6 +7,9 @@ import gspread
 import json
 from oauth2client.service_account import ServiceAccountCredentials
 
+import cs_messenger
+import coupang_qa
+
 # 1. 금고에서 기본 열쇠들 꺼내기
 COUPANG_ACCESS_KEY = os.environ.get('COUPANG_ACCESS_KEY')
 COUPANG_SECRET_KEY = os.environ.get('COUPANG_SECRET_KEY')
@@ -70,4 +73,19 @@ if __name__ == "__main__":
         print(f"💡 {selected_wh}로 발주 전송을 시도합니다... (ID: {ADMIN_ID})")
         # 여기에 사장님의 실제 발주 전송 로직(requests.post 등)을 넣으면 끝!
         
-    print("✅ 오늘의 자동 업무가 완료되었습니다.")
+    print("\n==============================================")
+    print("💌 [부가기능 1] CS 문자 자동 발송 시작")
+    print("==============================================")
+    cs_messenger.send_cs_message("010-1234-5678", "고객님, 사과가 오늘 싱싱하게 출발했습니다!")
+    
+    print("\n==============================================")
+    print("💬 [부가기능 2] 쿠팡 Q&A 자동 확인 시작")
+    print("==============================================")
+    qas = coupang_qa.check_new_qa()
+    for qa in qas:
+        qa_id = qa.get('inquiryId', '알수없음')
+        question_text = qa.get('content', '')
+        coupang_qa.reply_to_qa(qa_id, question_text)
+        
+    print("\n✅ 오늘의 발주, CS 문자, Q&A 업무가 모두 완료되었습니다.")
+
