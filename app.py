@@ -3,6 +3,11 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import json
 import os
+import requests
+import time
+import hmac
+import hashlib
+import pandas as pd
 
 # 1. 구글 시트 연결 설정
 def get_gspread_client():
@@ -88,6 +93,60 @@ if client:
                 st.success("✨ 성공적으로 저장되었습니다! 로봇이 이 설정대로 움직입니다.")
                 st.balloons()
                 st.rerun()
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        
+        # --- [4] 쿠팡 실시간 주문 조회 ---
+        st.markdown("### 🛒 오늘의 신규 발주 조회")
+        with st.container(border=True):
+            st.markdown("쿠팡에 들어온 최신 '결제완료/상품준비중' 주문을 실시간으로 확인합니다.")
+            if st.button("🔄 주문 목록 가져오기", use_container_width=True):
+                # 웹 환경(Streamlit)에서 쿠팡 키 확인
+                if "COUPANG_ACCESS_KEY" not in st.secrets:
+                    st.warning("⚠️ Streamlit 설정에 쿠팡 API 키가 등록되지 않았습니다. 가이드를 참고해 키를 등록해주세요.")
+                else:
+                    with st.spinner('쿠팡에서 주문을 가져오는 중...'):
+                        ACCESS_KEY = st.secrets["COUPANG_ACCESS_KEY"]
+                        SECRET_KEY = st.secrets["COUPANG_SECRET_KEY"]
+                        SELLER_ID = st.secrets["COUPANG_SELLER_ID"]
+                        
+                        # 쿠팡 API 호출 (status=ACCEPT)
+                        path = f"/v2/providers/openapi/apis/api/v4/vendors/{SELLER_ID}/ordersheets"
+                        method = "GET"
+                        query_string = "status=ACCEPT"
+                        timestamp = time.strftime('%y%m%dT%H%M%SZ', time.gmtime())
+                        message = timestamp + method + path + query_string
+                        signature = hmac.new(SECRET_KEY.encode('utf-8'), message.encode('utf-8'), hashlib.sha256).hexdigest()
+                        authorization = f"CEA algorithm=HmacSHA256, access-key={ACCESS_KEY}, signed-date={timestamp}, signature={signature}"
+                        url = f"https://api-gateway.coupang.com{path}?{query_string}"
+                        headers = {"Content-Type": "application/json", "Authorization": authorization}
+                        
+                        res = requests.get(url, headers=headers)
+                        if res.status_code == 200:
+                            orders = res.json().get('data', [])
+                            if not orders:
+                                st.info("👍 현재 수집된 신규 주문이 없습니다.")
+                            else:
+                                st.success(f"총 {len(orders)}건의 신규 주문을 불러왔습니다!")
+                                
+                                # 주문 데이터를 표 형태로 정리
+                                table_data = []
+                                for order in orders:
+                                    items = order.get('orderItems', [])
+                                    for item in items:
+                                        table_data.append({
+                                            "주문일시": order.get('orderedAt', '')[:16],
+                                            "주문번호": order.get('orderId', ''),
+                                            "상품명": item.get('vendorItemName', ''),
+                                            "수량": item.get('shippingCount', 0),
+                                            "수취인": order.get('receiver', {}).get('name', ''),
+                                            "연락처": order.get('receiver', {}).get('safeNumber', '')
+                                        })
+                                
+                                df = pd.DataFrame(table_data)
+                                st.dataframe(df, use_container_width=True, hide_index=True)
+                        else:
+                            st.error(f"주문 수집 실패: {res.status_code}")
 
     except gspread.exceptions.SpreadsheetNotFound:
         st.error(f"구글 시트를 찾을 수 없습니다. 시트 이름이 '{sheet_name}'이 맞는지 확인해주세요.")
