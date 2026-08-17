@@ -16,8 +16,8 @@ COUPANG_SECRET_KEY = os.environ.get('COUPANG_SECRET_KEY')
 COUPANG_SELLER_ID = os.environ.get('COUPANG_SELLER_ID')
 GOOGLE_SHEETS_JSON = os.environ.get('GOOGLE_SHEETS_JSON')
 
-# 2. 구글 시트에서 오늘의 도매처가 어디인지 물어보는 함수
-def get_today_wholesaler():
+# 2. 구글 시트에서 오늘의 도매처와 스위치 상태를 읽어오는 함수
+def get_today_settings():
     try:
         key_dict = json.loads(GOOGLE_SHEETS_JSON)
         scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
@@ -26,11 +26,15 @@ def get_today_wholesaler():
         
         # 시트 이름이 '김씨네 프레시'인지 확인하세요!
         sheet = client.open("김씨네 프레시").sheet1
-        selection = sheet.acell('B2').value # B2 칸 읽기
-        return selection
+        
+        wholesaler = sheet.acell('B2').value or "도매처A"
+        qa_status = sheet.acell('C2').value or "OFF"
+        cs_status = sheet.acell('D2').value or "OFF"
+        
+        return wholesaler, qa_status, cs_status
     except Exception as e:
         print(f"❌ 구글 시트를 읽는 중 오류 발생: {e}")
-        return "도매처A" # 오류 나면 기본으로 A 선택
+        return "도매처A", "OFF", "OFF" # 오류 나면 전부 기본값/OFF 처리
 
 # 3. 쿠팡 주문 수집 함수 (기존 코드 유지)
 def get_orders():
@@ -52,9 +56,10 @@ def get_orders():
 
 # 4. 메인 실행부
 if __name__ == "__main__":
-    # [단계 1] 오늘의 도매처 확인
-    selected_wh = get_today_wholesaler()
+    # [단계 1] 구글 시트에서 설정 읽어오기
+    selected_wh, qa_status, cs_status = get_today_settings()
     print(f"📍 오늘의 타겟 도매처: {selected_wh}")
+    print(f"📍 Q&A 자동화: {qa_status}, CS 자동화: {cs_status}")
 
     # [단계 2] 선택된 도매처에 맞는 열쇠 세팅
     if selected_wh == "도매처B":
@@ -74,18 +79,26 @@ if __name__ == "__main__":
         # 여기에 사장님의 실제 발주 전송 로직(requests.post 등)을 넣으면 끝!
         
     print("\n==============================================")
-    print("💌 [부가기능 1] CS 문자 자동 발송 시작")
-    print("==============================================")
-    cs_messenger.send_cs_message("010-1234-5678", "고객님, 사과가 오늘 싱싱하게 출발했습니다!")
-    
+    if cs_status == "ON":
+        print("💌 [부가기능 1] CS 문자 자동 발송 시작")
+        print("==============================================")
+        cs_messenger.send_cs_message("010-1234-5678", "고객님, 사과가 오늘 싱싱하게 출발했습니다!")
+    else:
+        print("💌 [부가기능 1] CS 문자 자동 발송 (OFF 상태라 건너뜁니다)")
+        print("==============================================")
+        
     print("\n==============================================")
-    print("💬 [부가기능 2] 쿠팡 Q&A 자동 확인 시작")
-    print("==============================================")
-    qas = coupang_qa.check_new_qa()
-    for qa in qas:
-        qa_id = qa.get('inquiryId', '알수없음')
-        question_text = qa.get('content', '')
-        coupang_qa.reply_to_qa(qa_id, question_text)
+    if qa_status == "ON":
+        print("💬 [부가기능 2] 쿠팡 Q&A 자동 확인 시작")
+        print("==============================================")
+        qas = coupang_qa.check_new_qa()
+        for qa in qas:
+            qa_id = qa.get('inquiryId', '알수없음')
+            question_text = qa.get('content', '')
+            coupang_qa.reply_to_qa(qa_id, question_text)
+    else:
+        print("💬 [부가기능 2] 쿠팡 Q&A 자동 확인 (OFF 상태라 건너뜁니다)")
+        print("==============================================")
         
     print("\n✅ 오늘의 발주, CS 문자, Q&A 업무가 모두 완료되었습니다.")
 
