@@ -59,9 +59,9 @@ if __name__ == "__main__":
         ADMIN_SECRET = os.environ.get('ADMINPLUS_B_SECRET')
         print("🔗 도매처 B(ADMINPLUS_B) 열쇠를 장착했습니다.")
     else:
-        ADMIN_ID = os.environ.get('ADMINPLUS_CLIENT_ID')
-        ADMIN_SECRET = os.environ.get('ADMINPLUS_CLIENT_SECRET')
-        print("🔗 도매처 A(기본 ADMINPLUS) 열쇠를 장착했습니다.")
+        ADMIN_ID = os.environ.get('ADMINPLUS_A_ID')
+        ADMIN_SECRET = os.environ.get('ADMINPLUS_A_SECRET')
+        print("🔗 도매처 A(ADMINPLUS_A) 열쇠를 장착했습니다.")
 
     # [단계 3] 쿠팡 주문 가져오기
     orders = get_orders()
