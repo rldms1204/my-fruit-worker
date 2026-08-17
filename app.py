@@ -1,62 +1,91 @@
 import streamlit as st
 import pandas as pd
 
-# 페이지 설정
-st.set_page_config(page_title="김씨네 프레시 비서", page_icon="🍎", layout="wide")
+# 1. 페이지 설정: 화면을 넓게(wide) 쓰고, 사이드바를 기본으로 닫아둡니다.
+st.set_page_config(
+    page_title="김씨네 프레시 관리자",
+    page_icon="🍎",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 
-# 제목
-st.title("🍎 김씨네 프레시 자동화 관리 시스템")
+# 스타일 커스텀: 여백 줄이기
+st.markdown("""
+    <style>
+    .block-container { padding-top: 2rem; padding-bottom: 0rem; }
+    div.stButton > button { width: 100%; border-radius: 5px; height: 3em; background-color: #f0f2f6; }
+    </style>
+    """, unsafe_allow_html=True)
 
-# 사이드바
-st.sidebar.header("🛠️ 시스템 상태")
-st.sidebar.success("서버 가동 중")
-st.sidebar.info("연동 계정: kimssine.fresh")
+# 상단 헤더 영역
+col_title, col_stat1, col_stat2, col_stat3 = st.columns([2, 1, 1, 1])
+with col_title:
+    st.title("🍎 김씨네 프레시")
 
-# 메뉴 구성 (CS 메뉴 추가!)
-tab1, tab2, tab3 = st.tabs(["📦 발주 관리", "💬 CS 관리(AI)", "⚙️ 설정"])
+# 요약 지표 (실시간 현황판)
+with col_stat1:
+    st.metric(label="신규 주문", value="2건", delta="신규")
+with col_stat2:
+    st.metric(label="미답변 CS", value="1건", delta="주의", delta_color="inverse")
+with col_stat3:
+    st.metric(label="오늘 발주완료", value="15건")
+
+st.divider()
+
+# 메인 업무 영역
+tab1, tab2, tab3 = st.tabs(["📦 주문 및 발주 관리", "💬 AI CS 응대", "⚙️ 시스템 설정"])
 
 with tab1:
-    st.subheader("오늘의 신규 주문")
+    # 기능 버튼을 상단에 가로로 배치
+    btn_col1, btn_col2, btn_col3, btn_col4 = st.columns(4)
+    with btn_col1:
+        if st.button("🔄 쿠팡 주문 새로고침"):
+            st.toast("최신 주문을 가져오는 중...")
+    with btn_col2:
+        st.button("📄 발주 엑셀 다운로드")
+    with btn_col3:
+        st.button("📤 송장 번호 일괄 업로드")
+    with btn_col4:
+        if st.button("🚀 어드민플러스 발주 전송", type="primary"):
+            st.error("API 연동 대기 중")
+
+    st.write("") # 간격
+    
+    # 주문 표 (공간을 넓게 사용)
+    st.subheader("실시간 주문 목록")
     dummy_data = {
-        "주문번호": ["20231010-001", "20231010-002"],
-        "상품명": ["[산지직송] 고당도 꿀사과 5kg", "프리미엄 샤인머스캣 2kg"],
-        "수량": [1, 2],
-        "받는분": ["홍길동", "임꺽정"],
-        "주소": ["서울시 강남구...", "부산시 해운대구..."],
-        "상태": ["결제완료", "결제완료"]
+        "주문번호": ["20231010-001", "20231010-002", "20231010-003", "20231010-004"],
+        "상품명": ["[산지직송] 고당도 꿀사과 5kg", "프리미엄 샤인머스캣 2kg", "제주 황금향 3kg", "영암 무화과 2kg"],
+        "수량": [1, 2, 1, 5],
+        "구매자": ["홍길동", "임꺽정", "장길산", "이몽룡"],
+        "연락처": ["010-1234-5678", "010-1111-2222", "010-3333-4444", "010-5555-6666"],
+        "배송지": ["서울시 강남구...", "부산시 해운대구...", "강원도 강릉시...", "전라남도 영암군..."],
+        "결제금액": ["25,000원", "48,000원", "32,000원", "55,000원"],
+        "상태": ["결제완료", "결제완료", "결제완료", "결제완료"]
     }
     df = pd.DataFrame(dummy_data)
-    st.dataframe(df, use_container_width=True)
-    
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("🔄 쿠팡 주문 새로고침", use_container_width=True):
-            st.toast("주문을 확인하고 있습니다...")
-    with col2:
-        if st.button("🚀 어드민플러스 발주 전송", use_container_width=True):
-            st.error("현재 테스트 모드입니다. API 연동이 필요합니다.")
+    st.dataframe(df, use_container_width=True, height=400)
 
 with tab2:
-    st.subheader("🤖 AI CS 답변 비서")
-    st.write("고객의 문의 내용을 입력하면 AI가 답변 초안을 만들어줍니다.")
-    
-    user_query = st.text_area("고객 문의 내용 입력", placeholder="예: 사과가 깨져서 왔어요. 환불해주세요.")
-    
-    if st.button("AI 답변 생성"):
-        if user_query:
-            st.info("AI가 답변을 생성 중입니다...")
-            # 나중에 여기에 진짜 AI 기능을 넣을 거예요. 지금은 예시입니다.
-            if "배송" in user_query:
-                st.success("**[AI 추천 답변]**\n\n안녕하세요 고객님! 김씨네 프레시입니다. 주문하신 상품은 현재 산지에서 포장 완료되어 택배사로 인계되었습니다. 내일 중으로는 수령 가능하실 것으로 보입니다. 조금만 기다려주세요!")
-            elif "파손" in user_query or "깨져" in user_query or "터져" in user_query:
-                st.success("**[AI 추천 답변]**\n\n안녕하세요 고객님, 불편을 드려 정말 죄송합니다. 과일 특성상 배송 중 충격이 발생한 것 같습니다. 사진을 찍어 보내주시면 확인 즉시 새 상품으로 재발송 혹은 환불 처리를 도와드리겠습니다.")
-            else:
-                st.success("**[AI 추천 답변]**\n\n안녕하세요 고객님! 문의하신 내용 확인하였습니다. 담당 부서에 전달하여 빠르게 확인 후 안내해 드리겠습니다. 감사합니다.")
-        else:
-            st.warning("문의 내용을 입력해주세요.")
+    col_cs_in, col_cs_out = st.columns([1, 1])
+    with col_cs_in:
+        st.subheader("문의 내용")
+        user_query = st.text_area("고객 문의를 입력하세요", height=200, placeholder="배송 문의, 파손 접수 등...")
+        st.button("✨ AI 답변 생성")
+    with col_cs_out:
+        st.subheader("AI 추천 답변")
+        st.info("여기에 답변이 생성됩니다.")
 
 with tab3:
-    st.subheader("⚙️ 시스템 설정")
-    st.write("등록된 API 키 정보 (보안을 위해 일부 숨김)")
-    st.text_input("쿠팡 API 상태", value="연결 대기 중", disabled=True)
-    st.text_input("도매처 API 상태", value="연결 대기 중", disabled=True)
+    st.subheader("시스템 및 API 설정")
+    col_conf1, col_conf2 = st.columns(2)
+    with col_conf1:
+        st.text_input("쿠팡 Seller ID", value="A00XXXXX", disabled=True)
+        st.text_input("어드민플러스 연동 업체수", value="1곳", disabled=True)
+    with col_conf2:
+        st.write("자동 발주 예약 설정")
+        st.toggle("오전 10시 자동 발주", value=False)
+        st.toggle("오후 4시 자동 발주", value=False)
+
+# 하단 푸터
+st.caption("© 2024 Kimssine Fresh Automation System")
