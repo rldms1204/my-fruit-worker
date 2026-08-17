@@ -121,7 +121,15 @@ if client:
                         url = f"https://api-gateway.coupang.com{path}?{query_string}"
                         headers = {"Content-Type": "application/json", "Authorization": authorization}
                         
-                        res = requests.get(url, headers=headers)
+                        # 프록시(고정 IP) 설정 확인
+                        fixie_url = st.secrets.get("FIXIE_URL", None)
+                        proxies = {"http": fixie_url, "https": fixie_url} if fixie_url else None
+                        
+                        if fixie_url:
+                            res = requests.get(url, headers=headers, proxies=proxies)
+                        else:
+                            res = requests.get(url, headers=headers)
+                            
                         if res.status_code == 200:
                             orders = res.json().get('data', [])
                             if not orders:

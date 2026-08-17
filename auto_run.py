@@ -49,7 +49,15 @@ def get_orders():
     url = f"https://api-gateway.coupang.com{path}?{query_string}"
     headers = {"Content-Type": "application/json", "Authorization": authorization}
     
-    res = requests.get(url, headers=headers)
+    # 프록시(고정 IP) 설정 확인
+    FIXIE_URL = os.environ.get('FIXIE_URL')
+    proxies = {"http": FIXIE_URL, "https": FIXIE_URL} if FIXIE_URL else None
+    
+    if FIXIE_URL:
+        res = requests.get(url, headers=headers, proxies=proxies)
+    else:
+        res = requests.get(url, headers=headers)
+        
     orders = res.json().get('data', [])
     print(f"📦 수집 완료: 총 {len(orders)}건의 주문을 찾았습니다.")
     return orders
