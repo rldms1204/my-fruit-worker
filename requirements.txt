@@ -22,3 +22,6 @@ PyYAML>=6.0.0
 
 # === 스케줄링 (Phase 4) ===
 schedule>=1.2.0
+
+gspread>=5.10.0
+oauth2client>=4.1.3
