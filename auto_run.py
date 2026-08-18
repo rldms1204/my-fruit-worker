@@ -39,12 +39,18 @@ def get_today_settings():
 # 3. 쿠팡 주문 수집 함수 (기존 코드 유지)
 def get_orders():
     print("🚀 로봇 비서: 쿠팡에서 신규 주문을 수집합니다...")
+    now = time.gmtime()
+    from_time = time.strftime('%Y-%m-%d', time.gmtime(time.time() - 86400))
+    to_time = time.strftime('%Y-%m-%d', time.gmtime(time.time() + 86400))
+    
     path = f"/v2/providers/openapi/apis/api/v4/vendors/{COUPANG_SELLER_ID}/ordersheets"
     method = "GET"
-    query_string = "status=ACCEPT"
-    timestamp = time.strftime('%y%m%dT%H%M%SZ', time.gmtime())
+    query_string = f"createdAtFrom={from_time}&createdAtTo={to_time}&status=ACCEPT"
+    
+    timestamp = time.strftime('%y%m%dT%H%M%SZ', now)
     message = timestamp + method + path + query_string
     signature = hmac.new(COUPANG_SECRET_KEY.encode('utf-8'), message.encode('utf-8'), hashlib.sha256).hexdigest()
+    
     authorization = f"CEA algorithm=HmacSHA256, access-key={COUPANG_ACCESS_KEY}, signed-date={timestamp}, signature={signature}"
     url = f"https://api-gateway.coupang.com{path}?{query_string}"
     headers = {"Content-Type": "application/json", "Authorization": authorization}

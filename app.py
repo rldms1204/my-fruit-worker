@@ -111,12 +111,18 @@ if client:
                         SELLER_ID = st.secrets["COUPANG_SELLER_ID"]
                         
                         # 쿠팡 API 호출 (status=ACCEPT)
+                        now = time.gmtime()
+                        from_time = time.strftime('%Y-%m-%d', time.gmtime(time.time() - 86400))
+                        to_time = time.strftime('%Y-%m-%d', time.gmtime(time.time() + 86400))
+                        
                         path = f"/v2/providers/openapi/apis/api/v4/vendors/{SELLER_ID}/ordersheets"
                         method = "GET"
-                        query_string = "status=ACCEPT"
-                        timestamp = time.strftime('%y%m%dT%H%M%SZ', time.gmtime())
+                        query_string = f"createdAtFrom={from_time}&createdAtTo={to_time}&status=ACCEPT"
+                        
+                        timestamp = time.strftime('%y%m%dT%H%M%SZ', now)
                         message = timestamp + method + path + query_string
                         signature = hmac.new(SECRET_KEY.encode('utf-8'), message.encode('utf-8'), hashlib.sha256).hexdigest()
+                        
                         authorization = f"CEA algorithm=HmacSHA256, access-key={ACCESS_KEY}, signed-date={timestamp}, signature={signature}"
                         url = f"https://api-gateway.coupang.com{path}?{query_string}"
                         headers = {"Content-Type": "application/json", "Authorization": authorization}
