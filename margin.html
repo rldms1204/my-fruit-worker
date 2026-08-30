@@ -257,7 +257,7 @@
                     반품율: 
                     <div class="touch-stepper">
                         <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                        <input type="number" inputmode="numeric" id="qReturnRate" class="show-spinner nav-input" value="3" step="1" oninput="calcQuick()">
+                        <input type="number" inputmode="numeric" id="qReturnRate" class="show-spinner nav-input" value="3" step="1" oninput="calcQuick('fromLast')">
                         <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                     </div> %
                 </div>
@@ -276,15 +276,15 @@
                 <tbody>
                     <tr class="quick-row">
                         <td><input type="text" class="input-opt-name nav-input" placeholder="품목명" oninput="saveData()"></td>
-                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" id="qSellPrice" class="input-discount-sell nav-input" placeholder="0" oninput="calcQuick()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" id="qSellPrice" class="input-discount-sell nav-input" placeholder="0" oninput="calcQuick('fromSell')"></td>
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="number" inputmode="numeric" id="qMarginInput" class="editable-margin nav-input show-spinner" value="20" min="0" step="1" oninput="calcQuick()" style="color:#F87171 !important; border-color:rgba(248, 113, 113, 0.4) !important; font-weight:700;">
+                                <input type="number" inputmode="numeric" id="qMarginInput" class="editable-margin nav-input show-spinner" value="20" min="0" step="1" oninput="calcQuick('fromLast')" style="color:#F87171 !important; border-color:rgba(248, 113, 113, 0.4) !important; font-weight:700;">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
-                        <td class="highlight-col"><input type="text" id="qTargetBuyDisplay" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color); font-size:15px; font-weight:800;"></td>
+                        <td class="highlight-col"><input type="text" inputmode="numeric" pattern="[0-9]*" id="qTargetBuy" class="input-buy nav-input col-buy" placeholder="0" oninput="calcQuick('fromBuy')" style="color:var(--buy-color); font-size:15px; font-weight:800;"></td>
                     </tr>
                 </tbody>
             </table>
@@ -622,18 +622,41 @@
         }
     });
 
-    // 퀵 계산기 로직
-    function calcQuick() {
+    // ⚡ 퀵 계산기 양방향 스마트 로직 (판매가 ➔ 소싱가 / 소싱가 ➔ 판매가 상호 자동 계산)
+    let lastQuickTrigger = 'fromSell';
+    function calcQuick(trigger = 'fromSell') {
         try {
-            const sellPrice = Number(document.getElementById('qSellPrice')?.value) || 0;
-            const margin = (Number(document.getElementById('qMarginInput')?.value) || 20) / 100;
+            if (trigger === 'fromSell' || trigger === 'fromBuy') {
+                lastQuickTrigger = trigger;
+            } else if (trigger === 'fromLast') {
+                trigger = lastQuickTrigger;
+            }
+
+            const marginRate = (Number(document.getElementById('qMarginInput')?.value) || 20) / 100;
             const returnRate = (Number(document.getElementById('qReturnRate')?.value) || 3) / 100;
-            
-            const qTargetBuyElem = document.getElementById('qTargetBuyDisplay');
-            const targetBuy = sellPrice * (1 - FIXED_FEE_RATE - returnRate - margin);
-            
-            if (qTargetBuyElem) {
-                qTargetBuyElem.value = sellPrice > 0 ? formatNum(Math.max(0, targetBuy)) + "원" : "0원";
+            const sellElem = document.getElementById('qSellPrice');
+            const buyElem = document.getElementById('qTargetBuy');
+            if (!sellElem || !buyElem) return;
+
+            // 계수: (1 - 11.66% 수수료) * (1 - 반품율) - 목표마진율
+            const ratio = (1 - FIXED_FEE_RATE) * (1 - returnRate) - marginRate;
+
+            if (trigger === 'fromSell') {
+                const sellPrice = Number(sellElem.value) || 0;
+                if (sellPrice > 0 && ratio > 0) {
+                    const targetBuy = Math.floor(sellPrice * ratio);
+                    buyElem.value = targetBuy > 0 ? targetBuy : 0;
+                } else if (sellPrice === 0) {
+                    buyElem.value = "";
+                }
+            } else if (trigger === 'fromBuy') {
+                const buyPrice = Number(buyElem.value) || 0;
+                if (buyPrice > 0 && ratio > 0) {
+                    const targetSell = Math.ceil(buyPrice / ratio);
+                    sellElem.value = targetSell > 0 ? targetSell : 0;
+                } else if (buyPrice === 0) {
+                    sellElem.value = "";
+                }
             }
             saveData();
         } catch(e) {
@@ -648,7 +671,8 @@
             else if(i.id === 'qReturnRate') i.value = "3";
             else i.value = "";
         });
-        calcQuick();
+        lastQuickTrigger = 'fromSell';
+        calcQuick('fromSell');
     }
 
     function syncNames() {
