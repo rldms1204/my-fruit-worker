@@ -48,6 +48,42 @@
         }
         input { user-select: text; } 
 
+        /* [1] 스피너(화살표 증감 버튼) 커스텀 복원 */
+        input::-webkit-outer-spin-button, 
+        input::-webkit-inner-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] { -moz-appearance: textfield; }
+
+        input.show-spinner { 
+            padding-right: 22px !important;
+            position: relative;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='12' viewBox='0 0 8 12'%3E%3Cpath d='M2 4.5L4 2.5L6 4.5' stroke='%2352525B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cpath d='M2 7.5L4 9.5L6 7.5' stroke='%2352525B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+            background-repeat: no-repeat !important;
+            background-position: right 6px center !important;
+            background-size: 8px 12px !important;
+            cursor: pointer;
+        }
+        
+        input.show-spinner:hover {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='12' viewBox='0 0 8 12'%3E%3Cpath d='M2 4.5L4 2.5L6 4.5' stroke='%23FFFFFF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cpath d='M2 7.5L4 9.5L6 7.5' stroke='%23FFFFFF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+            border-color: #555 !important;
+        }
+
+        input.show-spinner::-webkit-inner-spin-button {
+            -webkit-appearance: inner-spin-button !important;
+            display: block !important;
+            width: 25px;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            opacity: 0 !important;
+            z-index: 10;
+        }
+
         .container { width: 100%; max-width: 1400px; }
         header { 
             margin-bottom: 25px; border-left: 5px solid var(--primary); padding-left: 20px; 
@@ -172,7 +208,7 @@
         </div>
     </header>
 
-    <!-- QUICK STEP (독립 계산기) -->
+    <!-- ⚡ QUICK STEP (독립 계산기 - 최상단 배치) -->
     <div class="section" id="quickStep">
         <div class="section-title title-sq">
             <span>⚡ QUICK STEP. 개별 소싱 계산기 (임시 계산용)</span>
@@ -193,14 +229,14 @@
                 <tbody>
                     <tr class="quick-row">
                         <td><input type="text" class="input-opt-name nav-input" placeholder="임시 품목명"></td>
-                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
-                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
-                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
-                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
-                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
-                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
+                        <td><input type="number" inputmode="numeric" class="q-price nav-input"></td>
+                        <td><input type="number" inputmode="numeric" class="q-price nav-input"></td>
+                        <td><input type="number" inputmode="numeric" class="q-price nav-input"></td>
+                        <td><input type="number" inputmode="numeric" class="q-price nav-input"></td>
+                        <td><input type="number" inputmode="numeric" class="q-price nav-input"></td>
+                        <td><input type="number" inputmode="numeric" class="q-price nav-input"></td>
                         <td class="highlight-col"><input type="text" id="qAvgDisplay" class="res-val" readonly value="0원"></td>
-                        <td><input type="text" inputmode="numeric" id="qMarginInput" class="editable-margin nav-input" value="18"></td>
+                        <td><input type="number" inputmode="numeric" id="qMarginInput" class="editable-margin nav-input show-spinner" value="18" min="0" step="1"></td>
                         <td class="highlight-col"><input type="text" id="qTargetBuyDisplay" class="res-val" readonly value="0원" style="color:var(--buy-color)"></td>
                     </tr>
                 </tbody>
@@ -208,7 +244,7 @@
         </div>
     </div>
 
-    <!-- STEP 1 -->
+    <!-- 📊 STEP 1 -->
     <div class="section" id="step1">
         <div class="section-title title-s1">
             <span>📊 STEP 1. 시장 판매가 분석</span>
@@ -232,50 +268,50 @@
                 <tbody id="sourcingBody">
                     <tr class="sourcing-row" data-id="1">
                         <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 1"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-a"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-b"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-c"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-d"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-e"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-f"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-a"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-b"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-c"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-d"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-e"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-f"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
-                        <td><input type="text" inputmode="numeric" class="row-margin-input editable-margin nav-input col-target-margin" value="18"></td>
+                        <td><input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1"></td>
                         <td class="highlight-col"><input type="text" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color)"></td>
                     </tr>
                     <tr class="sourcing-row" data-id="2">
                         <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 2"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-a"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-b"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-c"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-d"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-e"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-f"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-a"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-b"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-c"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-d"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-e"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-f"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
-                        <td><input type="text" inputmode="numeric" class="row-margin-input editable-margin nav-input col-target-margin" value="18"></td>
+                        <td><input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1"></td>
                         <td class="highlight-col"><input type="text" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color)"></td>
                     </tr>
                     <tr class="sourcing-row" data-id="3">
                         <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 3"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-a"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-b"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-c"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-d"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-e"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-f"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-a"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-b"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-c"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-d"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-e"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-f"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
-                        <td><input type="text" inputmode="numeric" class="row-margin-input editable-margin nav-input col-target-margin" value="18"></td>
+                        <td><input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1"></td>
                         <td class="highlight-col"><input type="text" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color)"></td>
                     </tr>
                     <tr class="sourcing-row" data-id="4">
                         <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 4"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-a"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-b"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-c"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-d"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-e"></td>
-                        <td><input type="text" inputmode="numeric" class="comp-price nav-input col-s1-f"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-a"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-b"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-c"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-d"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-e"></td>
+                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-f"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
-                        <td><input type="text" inputmode="numeric" class="row-margin-input editable-margin nav-input col-target-margin" value="18"></td>
+                        <td><input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1"></td>
                         <td class="highlight-col"><input type="text" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color)"></td>
                     </tr>
                 </tbody>
@@ -283,14 +319,14 @@
         </div>
     </div>
 
-    <!-- STEP 2 -->
+    <!-- 💰 STEP 2 -->
     <div class="section" id="step2">
         <div class="section-title title-s2">
             <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
                 <span>💰 STEP 2. 실전 마진 시뮬레이션</span>
                 <button type="button" class="step-reset" onclick="resetStep(2)" title="Step 2 초기화">↻</button>
                 <div class="mini-setting">
-                    반품율: <input type="text" inputmode="numeric" id="globalReturnRate" value="3"> %
+                    반품율: <input type="number" inputmode="numeric" id="globalReturnRate" class="show-spinner" value="3" step="1"> %
                 </div>
             </div>
             <div class="header-summary">
@@ -324,58 +360,58 @@
                 <tbody id="marginBody">
                     <tr class="margin-row" data-id="1">
                         <td class="input-opt-name margin-opt-label" id="margin-label-1">옵션 1</td>
-                        <td><input type="text" inputmode="numeric" class="input-buy my-buy nav-input col-buy"></td>
-                        <td><input type="text" inputmode="numeric" class="input-discount-sell my-discount-sell nav-input col-final"></td>
-                        <td><input type="text" inputmode="numeric" class="input-sell my-sell nav-input col-sell"></td>
-                        <td><input type="text" inputmode="numeric" class="my-coupon nav-input col-coupon" value="0"></td>
+                        <td><input type="number" inputmode="numeric" class="input-buy my-buy nav-input col-buy"></td>
+                        <td><input type="number" inputmode="numeric" class="input-discount-sell my-discount-sell nav-input col-final"></td>
+                        <td><input type="number" inputmode="numeric" class="input-sell my-sell nav-input col-sell"></td>
+                        <td><input type="number" inputmode="numeric" class="my-coupon nav-input col-coupon" value="0"></td>
                         <td><input type="text" class="res-val my-return-display" readonly value="0원"></td>
-                        <td><input type="text" inputmode="numeric" class="my-ad nav-input col-ad" value="0"></td>
+                        <td><input type="number" inputmode="numeric" class="my-ad nav-input col-ad" value="0"></td>
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
-                            <input type="text" inputmode="decimal" class="margin-rate-val editable-margin nav-input col-margin-rate" value="0.0">
+                            <input type="number" inputmode="decimal" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" value="0.0" step="1">
                         </td>
                     </tr>
                     <tr class="margin-row" data-id="2">
                         <td class="input-opt-name margin-opt-label" id="margin-label-2">옵션 2</td>
-                        <td><input type="text" inputmode="numeric" class="input-buy my-buy nav-input col-buy"></td>
-                        <td><input type="text" inputmode="numeric" class="input-discount-sell my-discount-sell nav-input col-final"></td>
-                        <td><input type="text" inputmode="numeric" class="input-sell my-sell nav-input col-sell"></td>
-                        <td><input type="text" inputmode="numeric" class="my-coupon nav-input col-coupon" value="0"></td>
+                        <td><input type="number" inputmode="numeric" class="input-buy my-buy nav-input col-buy"></td>
+                        <td><input type="number" inputmode="numeric" class="input-discount-sell my-discount-sell nav-input col-final"></td>
+                        <td><input type="number" inputmode="numeric" class="input-sell my-sell nav-input col-sell"></td>
+                        <td><input type="number" inputmode="numeric" class="my-coupon nav-input col-coupon" value="0"></td>
                         <td><input type="text" class="res-val my-return-display" readonly value="0원"></td>
-                        <td><input type="text" inputmode="numeric" class="my-ad nav-input col-ad" value="0"></td>
+                        <td><input type="number" inputmode="numeric" class="my-ad nav-input col-ad" value="0"></td>
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
-                            <input type="text" inputmode="decimal" class="margin-rate-val editable-margin nav-input col-margin-rate" value="0.0">
+                            <input type="number" inputmode="decimal" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" value="0.0" step="1">
                         </td>
                     </tr>
                     <tr class="margin-row" data-id="3">
                         <td class="input-opt-name margin-opt-label" id="margin-label-3">옵션 3</td>
-                        <td><input type="text" inputmode="numeric" class="input-buy my-buy nav-input col-buy"></td>
-                        <td><input type="text" inputmode="numeric" class="input-discount-sell my-discount-sell nav-input col-final"></td>
-                        <td><input type="text" inputmode="numeric" class="input-sell my-sell nav-input col-sell"></td>
-                        <td><input type="text" inputmode="numeric" class="my-coupon nav-input col-coupon" value="0"></td>
+                        <td><input type="number" inputmode="numeric" class="input-buy my-buy nav-input col-buy"></td>
+                        <td><input type="number" inputmode="numeric" class="input-discount-sell my-discount-sell nav-input col-final"></td>
+                        <td><input type="number" inputmode="numeric" class="input-sell my-sell nav-input col-sell"></td>
+                        <td><input type="number" inputmode="numeric" class="my-coupon nav-input col-coupon" value="0"></td>
                         <td><input type="text" class="res-val my-return-display" readonly value="0원"></td>
-                        <td><input type="text" inputmode="numeric" class="my-ad nav-input col-ad" value="0"></td>
+                        <td><input type="number" inputmode="numeric" class="my-ad nav-input col-ad" value="0"></td>
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
-                            <input type="text" inputmode="decimal" class="margin-rate-val editable-margin nav-input col-margin-rate" value="0.0">
+                            <input type="number" inputmode="decimal" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" value="0.0" step="1">
                         </td>
                     </tr>
                     <tr class="margin-row" data-id="4">
                         <td class="input-opt-name margin-opt-label" id="margin-label-4">옵션 4</td>
-                        <td><input type="text" inputmode="numeric" class="input-buy my-buy nav-input col-buy"></td>
-                        <td><input type="text" inputmode="numeric" class="input-discount-sell my-discount-sell nav-input col-final"></td>
-                        <td><input type="text" inputmode="numeric" class="input-sell my-sell nav-input col-sell"></td>
-                        <td><input type="text" inputmode="numeric" class="my-coupon nav-input col-coupon" value="0"></td>
+                        <td><input type="number" inputmode="numeric" class="input-buy my-buy nav-input col-buy"></td>
+                        <td><input type="number" inputmode="numeric" class="input-discount-sell my-discount-sell nav-input col-final"></td>
+                        <td><input type="number" inputmode="numeric" class="input-sell my-sell nav-input col-sell"></td>
+                        <td><input type="number" inputmode="numeric" class="my-coupon nav-input col-coupon" value="0"></td>
                         <td><input type="text" class="res-val my-return-display" readonly value="0원"></td>
-                        <td><input type="text" inputmode="numeric" class="my-ad nav-input col-ad" value="0"></td>
+                        <td><input type="number" inputmode="numeric" class="my-ad nav-input col-ad" value="0"></td>
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
-                            <input type="text" inputmode="decimal" class="margin-rate-val editable-margin nav-input col-margin-rate" value="0.0">
+                            <input type="number" inputmode="decimal" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" value="0.0" step="1">
                         </td>
                     </tr>
                 </tbody>
@@ -383,13 +419,13 @@
         </div>
     </div>
 
-    <!-- STEP 3 -->
+    <!-- 🚀 STEP 3 -->
     <div class="section">
         <div class="section-title title-s3">
             <span>🚀 STEP 3. 고급 전략 분석 패널</span>
             <div class="header-input-group">
                 목표 초기 마케팅 비용: 
-                <input type="text" inputmode="numeric" id="targetMktBudget" class="nav-input" value="100,000">
+                <input type="number" inputmode="numeric" id="targetMktBudget" class="nav-input" value="100000">
                 <span style="font-size:12px; margin-left:-5px;">원</span>
             </div>
         </div>
@@ -438,7 +474,7 @@
 <script>
     const FIXED_FEE_RATE = 0.1166;
 
-    // 강력한 숫자 파서 (쉼표, 특수문자, 공백 완벽 제거)
+    // 강력한 숫자 파서 (쉼표, 특수문자, 공백 완벽 정제)
     function parseNum(val) {
         if (val === null || val === undefined) return 0;
         if (typeof val === 'number') return isNaN(val) ? 0 : val;
@@ -451,6 +487,44 @@
         const val = Math.floor(parseNum(num));
         return val.toLocaleString();
     }
+
+    // 마우스 휠 숫자 임의 변경 방지
+    document.addEventListener('wheel', function(e) {
+        if (e.target.tagName === 'INPUT' && e.target.type === 'number') e.preventDefault();
+    }, { passive: false });
+
+    // ⌨️ 키보드 상/하/좌/우 엑셀식 내비게이션 복원
+    document.addEventListener('keydown', function(e) {
+        const target = e.target;
+        if (target.tagName !== 'INPUT') return;
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+            const allNavInputs = Array.from(document.querySelectorAll('.nav-input, #productName, #globalReturnRate, #targetMktBudget'));
+            const idx = allNavInputs.indexOf(target);
+            if (e.key === 'ArrowLeft' && idx > 0) {
+                allNavInputs[idx - 1].focus();
+            } else if (e.key === 'ArrowRight' && idx < allNavInputs.length - 1) {
+                allNavInputs[idx + 1].focus();
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                const colClass = Array.from(target.classList).find(c => c.startsWith('col-'));
+                if (colClass) {
+                    const colInputs = Array.from(document.querySelectorAll(`.${colClass}`));
+                    const colIdx = colInputs.indexOf(target);
+                    if (e.key === 'ArrowUp' && colIdx > 0) colInputs[colIdx - 1].focus();
+                    else if (e.key === 'ArrowDown' && colIdx < colInputs.length - 1) colInputs[colIdx + 1].focus();
+                }
+            }
+        }
+    });
+
+    // 🎯 클릭(포커스) 시 자동 전체 선택 (빠른 타이핑 복원)
+    document.addEventListener('focusin', function(e) {
+        if (e.target.tagName === 'INPUT' && !e.target.readOnly) {
+            setTimeout(() => { 
+                try { e.target.select(); } catch(err) {}
+            }, 0);
+        }
+    });
 
     // 퀵 계산기 로직
     function calcQuick() {
@@ -504,7 +578,7 @@
         const finalPrice = parseNum(row.querySelector('.my-discount-sell')?.value);
         const coupon = parseNum(row.querySelector('.my-coupon')?.value);
         const sellInput = row.querySelector('.my-sell');
-        if (sellInput) sellInput.value = formatNum(finalPrice + coupon);
+        if (sellInput) sellInput.value = finalPrice + coupon;
         calcAll('forward', id);
     }
 
@@ -514,7 +588,7 @@
         const finalPrice = parseNum(row.querySelector('.my-discount-sell')?.value);
         const coupon = parseNum(row.querySelector('.my-coupon')?.value);
         const sellInput = row.querySelector('.my-sell');
-        if (sellInput) sellInput.value = formatNum(finalPrice + coupon);
+        if (sellInput) sellInput.value = finalPrice + coupon;
         calcAll('forward', id);
     }
 
@@ -524,7 +598,7 @@
         const listPrice = parseNum(row.querySelector('.my-sell')?.value);
         const coupon = parseNum(row.querySelector('.my-coupon')?.value);
         const discountInput = row.querySelector('.my-discount-sell');
-        if (discountInput) discountInput.value = formatNum(Math.max(0, listPrice - coupon));
+        if (discountInput) discountInput.value = Math.max(0, listPrice - coupon);
         calcAll('forward', id);
     }
 
@@ -573,8 +647,8 @@
                     const denominator = 1 - FIXED_FEE_RATE - returnRateDec - targetM;
                     if (denominator > 0) {
                         const finalD = Math.ceil((buy + ad + (coupon * FIXED_FEE_RATE)) / denominator);
-                        if (discountInput) discountInput.value = formatNum(finalD); 
-                        if (sellInput) sellInput.value = formatNum(finalD + coupon);
+                        if (discountInput) discountInput.value = finalD; 
+                        if (sellInput) sellInput.value = finalD + coupon;
                     }
                 }
 
@@ -657,12 +731,12 @@
 
     function resetStep(stepNum) {
         if(!confirm(`STEP ${stepNum} 데이터를 초기화할까요?`)) return;
-        const section = document.querySelectorAll('.section')[stepNum-1];
+        const section = document.querySelectorAll('.section')[stepNum === 1 ? 1 : (stepNum === 2 ? 2 : 3)];
         if (!section) return;
         section.querySelectorAll('input:not([readonly])').forEach(input => {
             if(input.classList.contains('row-margin-input')) input.value = "18";
             else if(input.id === 'globalReturnRate') input.value = "3";
-            else if(input.id === 'targetMktBudget') input.value = "100,000";
+            else if(input.id === 'targetMktBudget') input.value = "100000";
             else if(!input.classList.contains('opt-name-input')) input.value = "";
         });
         if(stepNum === 2) section.querySelectorAll('.my-coupon, .my-ad').forEach(i => i.value = "0");
@@ -672,6 +746,7 @@
     function resetData() {
         if(confirm("모든 데이터를 초기화하시겠습니까?")) {
             try {
+                localStorage.removeItem('cp_pro_final_v2');
                 localStorage.removeItem('cp_pro_final_v3');
             } catch(e) {}
             location.reload();
@@ -684,13 +759,13 @@
             document.querySelectorAll('input:not([readonly])').forEach((input, index) => { 
                 data[index] = input.value; 
             });
-            localStorage.setItem('cp_pro_final_v3', JSON.stringify(data));
+            localStorage.setItem('cp_pro_final_v2', JSON.stringify(data));
         } catch(e) {}
     }
 
     function loadData() {
         try {
-            const saved = localStorage.getItem('cp_pro_final_v3');
+            const saved = localStorage.getItem('cp_pro_final_v2') || localStorage.getItem('cp_pro_final_v3');
             if(saved) {
                 const data = JSON.parse(saved);
                 document.querySelectorAll('input:not([readonly])').forEach((input, index) => {
@@ -705,7 +780,7 @@
         calcQuick();
     }
 
-    // 🌟 모바일 이벤트 위임 (어떤 입력이든 100% 포착)
+    // 🌟 모바일 및 PC 통합 이벤트 리스너
     document.addEventListener('input', (e) => {
         const target = e.target;
         if (!target || target.tagName !== 'INPUT') return;
