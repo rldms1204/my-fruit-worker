@@ -257,7 +257,7 @@
                     반품율: 
                     <div class="touch-stepper">
                         <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                        <input type="number" id="qReturnRate" class="show-spinner nav-input" value="3" step="1" oninput="calcQuick()">
+                        <input type="text" inputmode="numeric" pattern="[0-9]*" id="qReturnRate" class="show-spinner nav-input" value="3" oninput="calcQuick()">
                         <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                     </div> %
                 </div>
@@ -276,11 +276,11 @@
                 <tbody>
                     <tr class="quick-row">
                         <td><input type="text" class="input-opt-name nav-input" placeholder="품목명" oninput="saveData()"></td>
-                        <td><input type="number" id="qSellPrice" class="input-discount-sell nav-input" placeholder="0" oninput="calcQuick()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" id="qSellPrice" class="input-discount-sell nav-input" placeholder="0" oninput="calcQuick()"></td>
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="number" id="qMarginInput" class="editable-margin nav-input show-spinner" value="20" min="0" step="1" oninput="calcQuick()">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" id="qMarginInput" class="editable-margin nav-input show-spinner" value="20" oninput="calcQuick()">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -315,17 +315,17 @@
                 <tbody id="sourcingBody">
                     <tr class="sourcing-row" data-id="1">
                         <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 1" oninput="syncNames()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-a" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-b" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-c" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-d" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-a" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-b" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-c" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-d" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" oninput="calcAll()">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -333,17 +333,17 @@
                     </tr>
                     <tr class="sourcing-row" data-id="2">
                         <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 2" oninput="syncNames()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-a" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-b" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-c" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-d" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-a" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-b" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-c" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-d" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" oninput="calcAll()">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -351,17 +351,17 @@
                     </tr>
                     <tr class="sourcing-row" data-id="3">
                         <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 3" oninput="syncNames()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-a" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-b" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-c" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-d" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-a" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-b" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-c" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-d" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" oninput="calcAll()">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -369,17 +369,17 @@
                     </tr>
                     <tr class="sourcing-row" data-id="4">
                         <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 4" oninput="syncNames()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-a" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-b" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-c" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-d" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
-                        <td><input type="number" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-a" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-b" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-c" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-d" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" oninput="calcAll()">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -400,7 +400,7 @@
                     반품율: 
                     <div class="touch-stepper">
                         <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                        <input type="number" id="globalReturnRate" class="show-spinner nav-input" value="3" step="1" oninput="calcAll()">
+                        <input type="text" inputmode="numeric" pattern="[0-9]*" id="globalReturnRate" class="show-spinner nav-input" value="3" oninput="calcAll()">
                         <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                     </div> %
                 </div>
@@ -436,72 +436,72 @@
                 <tbody id="marginBody">
                     <tr class="margin-row" data-id="1">
                         <td class="input-opt-name margin-opt-label" id="margin-label-1">옵션 1</td>
-                        <td><input type="number" class="input-buy my-buy nav-input col-buy" oninput="calcAll('forward', 1)"></td>
-                        <td><input type="number" class="input-discount-sell my-discount-sell nav-input col-final" oninput="calcByFinalPrice(1)"></td>
-                        <td><input type="number" class="input-sell my-sell nav-input col-sell" oninput="calcByListPrice(1)"></td>
-                        <td><input type="number" class="my-coupon nav-input col-coupon" value="0" oninput="calcByCoupon(1)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="input-buy my-buy nav-input col-buy" oninput="calcAll('forward', 1)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="input-discount-sell my-discount-sell nav-input col-final" oninput="calcByFinalPrice(1)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="input-sell my-sell nav-input col-sell" oninput="calcByListPrice(1)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="my-coupon nav-input col-coupon" value="0" oninput="calcByCoupon(1)"></td>
                         <td><input type="text" class="res-val my-return-display" readonly value="0원"></td>
-                        <td><input type="number" class="my-ad nav-input col-ad" value="0" oninput="calcAll('forward', 1)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="my-ad nav-input col-ad" value="0" oninput="calcAll('forward', 1)"></td>
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 1)">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" oninput="calcAll('reverse', 1)">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
                     </tr>
                     <tr class="margin-row" data-id="2">
                         <td class="input-opt-name margin-opt-label" id="margin-label-2">옵션 2</td>
-                        <td><input type="number" class="input-buy my-buy nav-input col-buy" oninput="calcAll('forward', 2)"></td>
-                        <td><input type="number" class="input-discount-sell my-discount-sell nav-input col-final" oninput="calcByFinalPrice(2)"></td>
-                        <td><input type="number" class="input-sell my-sell nav-input col-sell" oninput="calcByListPrice(2)"></td>
-                        <td><input type="number" class="my-coupon nav-input col-coupon" value="0" oninput="calcByCoupon(2)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="input-buy my-buy nav-input col-buy" oninput="calcAll('forward', 2)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="input-discount-sell my-discount-sell nav-input col-final" oninput="calcByFinalPrice(2)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="input-sell my-sell nav-input col-sell" oninput="calcByListPrice(2)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="my-coupon nav-input col-coupon" value="0" oninput="calcByCoupon(2)"></td>
                         <td><input type="text" class="res-val my-return-display" readonly value="0원"></td>
-                        <td><input type="number" class="my-ad nav-input col-ad" value="0" oninput="calcAll('forward', 2)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="my-ad nav-input col-ad" value="0" oninput="calcAll('forward', 2)"></td>
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 2)">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" oninput="calcAll('reverse', 2)">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
                     </tr>
                     <tr class="margin-row" data-id="3">
                         <td class="input-opt-name margin-opt-label" id="margin-label-3">옵션 3</td>
-                        <td><input type="number" class="input-buy my-buy nav-input col-buy" oninput="calcAll('forward', 3)"></td>
-                        <td><input type="number" class="input-discount-sell my-discount-sell nav-input col-final" oninput="calcByFinalPrice(3)"></td>
-                        <td><input type="number" class="input-sell my-sell nav-input col-sell" oninput="calcByListPrice(3)"></td>
-                        <td><input type="number" class="my-coupon nav-input col-coupon" value="0" oninput="calcByCoupon(3)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="input-buy my-buy nav-input col-buy" oninput="calcAll('forward', 3)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="input-discount-sell my-discount-sell nav-input col-final" oninput="calcByFinalPrice(3)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="input-sell my-sell nav-input col-sell" oninput="calcByListPrice(3)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="my-coupon nav-input col-coupon" value="0" oninput="calcByCoupon(3)"></td>
                         <td><input type="text" class="res-val my-return-display" readonly value="0원"></td>
-                        <td><input type="number" class="my-ad nav-input col-ad" value="0" oninput="calcAll('forward', 3)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="my-ad nav-input col-ad" value="0" oninput="calcAll('forward', 3)"></td>
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 3)">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" oninput="calcAll('reverse', 3)">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
                     </tr>
                     <tr class="margin-row" data-id="4">
                         <td class="input-opt-name margin-opt-label" id="margin-label-4">옵션 4</td>
-                        <td><input type="number" class="input-buy my-buy nav-input col-buy" oninput="calcAll('forward', 4)"></td>
-                        <td><input type="number" class="input-discount-sell my-discount-sell nav-input col-final" oninput="calcByFinalPrice(4)"></td>
-                        <td><input type="number" class="input-sell my-sell nav-input col-sell" oninput="calcByListPrice(4)"></td>
-                        <td><input type="number" class="my-coupon nav-input col-coupon" value="0" oninput="calcByCoupon(4)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="input-buy my-buy nav-input col-buy" oninput="calcAll('forward', 4)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="input-discount-sell my-discount-sell nav-input col-final" oninput="calcByFinalPrice(4)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="input-sell my-sell nav-input col-sell" oninput="calcByListPrice(4)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="my-coupon nav-input col-coupon" value="0" oninput="calcByCoupon(4)"></td>
                         <td><input type="text" class="res-val my-return-display" readonly value="0원"></td>
-                        <td><input type="number" class="my-ad nav-input col-ad" value="0" oninput="calcAll('forward', 4)"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="my-ad nav-input col-ad" value="0" oninput="calcAll('forward', 4)"></td>
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 4)">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" oninput="calcAll('reverse', 4)">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -517,7 +517,7 @@
             <span>🚀 STEP 3. 고급 전략 분석 패널</span>
             <div class="header-input-group">
                 목표 초기 마케팅 비용: 
-                <input type="number" id="targetMktBudget" class="nav-input" value="100000" oninput="calcAll()">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" id="targetMktBudget" class="nav-input" value="100000" oninput="calcAll()">
                 <span style="font-size:12px; margin-left:-5px;">원</span>
             </div>
         </div>
