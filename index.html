@@ -269,7 +269,7 @@
                     <tr>
                         <th width="130">품목명</th>
                         <th width="110" style="color:var(--accent)">판매가</th>
-                        <th width="85" style="color:var(--text-dim)">목표마진%</th>
+                        <th width="85" style="color:var(--danger); font-weight: bold;">목표마진%</th>
                         <th width="110" style="color:var(--buy-color)">목표 소싱가</th>
                     </tr>
                 </thead>
@@ -280,7 +280,7 @@
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="number" inputmode="numeric" id="qMarginInput" class="editable-margin nav-input show-spinner" value="20" min="0" step="1" oninput="calcQuick()">
+                                <input type="number" inputmode="numeric" id="qMarginInput" class="editable-margin nav-input show-spinner" value="20" min="0" step="1" oninput="calcQuick()" style="color:var(--danger) !important; border-color:rgba(255, 77, 77, 0.5) !important; font-weight:800;">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
