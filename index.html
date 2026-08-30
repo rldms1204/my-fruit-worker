@@ -164,6 +164,17 @@
 
         .scroll-hint { display: none; }
 
+        /* 📱 모바일 전용 터치 스피너 버튼 스타일 (PC에서는 100% 숨김) */
+        .touch-stepper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
+        }
+        .btn-step {
+            display: none; /* PC에서는 완전 숨김 */
+        }
+
         /* 📱 모바일 / 아이패드 반응형 */
         @media (max-width: 900px) {
             body { padding: 15px 10px 40px 10px; }
@@ -178,6 +189,49 @@
                 color: var(--primary);
                 margin-bottom: 8px;
                 background: rgba(0, 242, 255, 0.06);
+                padding: 6px 10px;
+                border-radius: 6px;
+                border-left: 3px solid var(--primary);
+            }
+            .btn-step {
+                display: inline-flex !important;
+                align-items: center;
+                justify-content: center;
+                width: 26px;
+                height: 32px;
+                background: #252535;
+                border: 1px solid var(--border);
+                color: #FFF;
+                border-radius: 6px;
+                font-weight: 900;
+                font-size: 15px;
+                cursor: pointer;
+                user-select: none;
+                transition: background 0.1s;
+                flex-shrink: 0;
+            }
+            .btn-step:active {
+                background: var(--primary);
+                color: #000;
+            }
+            .touch-stepper {
+                gap: 3px;
+            }
+            .touch-stepper input {
+                width: 48px !important;
+                padding: 2px !important;
+            }
+            .mini-setting .touch-stepper input {
+                width: 38px !important;
+                height: 24px !important;
+            }
+            .mini-setting .btn-step {
+                width: 20px;
+                height: 22px;
+                font-size: 12px;
+                border-radius: 4px;
+            }
+        }
                 padding: 6px 10px;
                 border-radius: 6px;
                 border-left: 3px solid var(--primary);
@@ -200,7 +254,12 @@
                 <span>⚡ QUICK STEP. 퀵 소싱계산기</span>
                 <button class="step-reset" onclick="resetQuickStep()" title="Quick Step 초기화">↻</button>
                 <div class="mini-setting">
-                    반품율: <input type="number" id="qReturnRate" class="show-spinner nav-input" value="3" step="1" oninput="calcQuick()"> %
+                    반품율: 
+                    <div class="touch-stepper">
+                        <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
+                        <input type="number" id="qReturnRate" class="show-spinner nav-input" value="3" step="1" oninput="calcQuick()">
+                        <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
+                    </div> %
                 </div>
             </div>
         </div>
@@ -218,7 +277,13 @@
                     <tr class="quick-row">
                         <td><input type="text" class="input-opt-name nav-input" placeholder="품목명" oninput="saveData()"></td>
                         <td><input type="number" id="qSellPrice" class="input-discount-sell nav-input" placeholder="0" oninput="calcQuick()"></td>
-                        <td><input type="number" id="qMarginInput" class="editable-margin nav-input show-spinner" value="20" min="0" step="1" oninput="calcQuick()"></td>
+                        <td>
+                            <div class="touch-stepper">
+                                <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
+                                <input type="number" id="qMarginInput" class="editable-margin nav-input show-spinner" value="20" min="0" step="1" oninput="calcQuick()">
+                                <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
+                            </div>
+                        </td>
                         <td class="highlight-col"><input type="text" id="qTargetBuyDisplay" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color); font-size:15px; font-weight:800;"></td>
                     </tr>
                 </tbody>
@@ -257,7 +322,13 @@
                         <td><input type="number" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
                         <td><input type="number" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
-                        <td><input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()"></td>
+                        <td>
+                            <div class="touch-stepper">
+                                <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
+                                <input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()">
+                                <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
+                            </div>
+                        </td>
                         <td class="highlight-col"><input type="text" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color)"></td>
                     </tr>
                     <tr class="sourcing-row" data-id="2">
@@ -269,7 +340,13 @@
                         <td><input type="number" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
                         <td><input type="number" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
-                        <td><input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()"></td>
+                        <td>
+                            <div class="touch-stepper">
+                                <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
+                                <input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()">
+                                <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
+                            </div>
+                        </td>
                         <td class="highlight-col"><input type="text" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color)"></td>
                     </tr>
                     <tr class="sourcing-row" data-id="3">
@@ -281,7 +358,13 @@
                         <td><input type="number" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
                         <td><input type="number" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
-                        <td><input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()"></td>
+                        <td>
+                            <div class="touch-stepper">
+                                <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
+                                <input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()">
+                                <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
+                            </div>
+                        </td>
                         <td class="highlight-col"><input type="text" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color)"></td>
                     </tr>
                     <tr class="sourcing-row" data-id="4">
@@ -293,7 +376,13 @@
                         <td><input type="number" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
                         <td><input type="number" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
-                        <td><input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()"></td>
+                        <td>
+                            <div class="touch-stepper">
+                                <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
+                                <input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()">
+                                <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
+                            </div>
+                        </td>
                         <td class="highlight-col"><input type="text" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color)"></td>
                     </tr>
                 </tbody>
@@ -308,7 +397,12 @@
                 <span>💰 STEP 2. 실전 마진 시뮬레이션</span>
                 <button class="step-reset" onclick="resetStep(2)" title="Step 2 초기화">↻</button>
                 <div class="mini-setting">
-                    반품율: <input type="number" id="globalReturnRate" class="show-spinner nav-input" value="3" step="1" oninput="calcAll()"> %
+                    반품율: 
+                    <div class="touch-stepper">
+                        <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
+                        <input type="number" id="globalReturnRate" class="show-spinner nav-input" value="3" step="1" oninput="calcAll()">
+                        <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
+                    </div> %
                 </div>
             </div>
             <div class="header-summary">
@@ -351,7 +445,11 @@
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
-                            <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 1)">
+                            <div class="touch-stepper">
+                                <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
+                                <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 1)">
+                                <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
+                            </div>
                         </td>
                     </tr>
                     <tr class="margin-row" data-id="2">
@@ -365,7 +463,11 @@
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
-                            <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 2)">
+                            <div class="touch-stepper">
+                                <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
+                                <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 2)">
+                                <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
+                            </div>
                         </td>
                     </tr>
                     <tr class="margin-row" data-id="3">
@@ -379,7 +481,11 @@
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
-                            <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 3)">
+                            <div class="touch-stepper">
+                                <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
+                                <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 3)">
+                                <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
+                            </div>
                         </td>
                     </tr>
                     <tr class="margin-row" data-id="4">
@@ -393,7 +499,11 @@
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
-                            <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 4)">
+                            <div class="touch-stepper">
+                                <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
+                                <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 4)">
+                                <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -456,6 +566,16 @@
 <script>
     const FIXED_FEE_RATE = 0.1166;
     function formatNum(num) { return Math.floor(num || 0).toLocaleString(); }
+
+    // 📱 모바일 터치 증감 스피너 함수 (손가락으로 콕콕 눌러 조절)
+    function stepVal(btn, delta) {
+        const input = btn.parentElement.querySelector('input');
+        if (!input) return;
+        let val = parseFloat(input.value) || 0;
+        val = Math.max(0, val + delta);
+        input.value = val;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
 
     // 마우스 휠 방지
     document.addEventListener('wheel', function(e) {
