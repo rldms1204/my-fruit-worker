@@ -112,6 +112,22 @@
 
         table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 900px; }
 
+        /* ⚡ 퀵스텝 전용 콤팩트 레이아웃 (스텝2 크기와 동일, 모바일 스크롤 불필요) */
+        #quickStep table { 
+            min-width: 0 !important; 
+            width: 100% !important; 
+            max-width: 520px !important;
+        }
+        #quickStep .table-wrapper {
+            overflow-x: visible !important;
+        }
+        #quickStep th, #quickStep td {
+            padding: 8px 5px !important;
+        }
+        #quickStep .scroll-hint {
+            display: none !important;
+        }
+
         .header-input-group { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-dim); margin-left: auto; }
         .header-input-group input#productName { 
             background: transparent; border: none; border-bottom: 1px solid var(--border); 
@@ -192,10 +208,10 @@
             <table>
                 <thead>
                     <tr>
-                        <th width="200">품목명</th>
-                        <th width="160" style="color:var(--accent)">판매가</th>
-                        <th width="130" style="color:var(--text-dim)">목표마진%</th>
-                        <th width="160" style="color:var(--buy-color)">목표 소싱가</th>
+                        <th width="130">품목명</th>
+                        <th width="110" style="color:var(--accent)">판매가</th>
+                        <th width="85" style="color:var(--text-dim)">목표마진%</th>
+                        <th width="110" style="color:var(--buy-color)">목표 소싱가</th>
                     </tr>
                 </thead>
                 <tbody>
