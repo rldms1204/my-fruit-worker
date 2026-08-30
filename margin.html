@@ -177,36 +177,33 @@
         <button class="reset-btn" onclick="resetData()">전체 초기화</button>
     </header>
 
-    <!-- ⚡ QUICK STEP (독립 계산기 - 대표님 요청으로 STEP 1 위로 이동) -->
+    <!-- ⚡ QUICK STEP (독립 계산기 - 퀵 소싱계산기) -->
     <div class="section" id="quickStep">
         <div class="section-title title-sq">
-            <span>⚡ QUICK STEP. 퀵 소싱계산기</span>
-            <button class="step-reset" onclick="resetQuickStep()" title="Quick Step 초기화">↻</button>
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <span>⚡ QUICK STEP. 퀵 소싱계산기</span>
+                <button class="step-reset" onclick="resetQuickStep()" title="Quick Step 초기화">↻</button>
+                <div class="mini-setting">
+                    반품율: <input type="number" id="qReturnRate" class="show-spinner nav-input" value="3" step="1" oninput="calcQuick()"> %
+                </div>
+            </div>
         </div>
-        <div class="scroll-hint">👉 표를 좌우로 스와이프(밀어서) 전체 항목을 확인하세요</div>
         <div class="table-wrapper">
             <table>
                 <thead>
                     <tr>
-                        <th width="140">참고 품목명</th>
-                        <th width="65">A</th><th width="65">B</th><th width="65">C</th><th width="65">D</th><th width="65">E</th><th width="65">F</th>
-                        <th width="90" style="color:var(--opt-name-color)">평균가</th>
-                        <th width="100" style="color:var(--text-dim)">목표마진%</th>
-                        <th width="100" style="color:var(--buy-color)">목표 소싱가</th>
+                        <th width="200">품목명</th>
+                        <th width="160" style="color:var(--accent)">판매가</th>
+                        <th width="130" style="color:var(--text-dim)">목표마진%</th>
+                        <th width="160" style="color:var(--buy-color)">목표 소싱가</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="quick-row">
-                        <td><input type="text" class="input-opt-name nav-input" placeholder="임시 품목명" oninput="saveData()"></td>
-                        <td><input type="number" class="q-price nav-input" oninput="calcQuick()"></td>
-                        <td><input type="number" class="q-price nav-input" oninput="calcQuick()"></td>
-                        <td><input type="number" class="q-price nav-input" oninput="calcQuick()"></td>
-                        <td><input type="number" class="q-price nav-input" oninput="calcQuick()"></td>
-                        <td><input type="number" class="q-price nav-input" oninput="calcQuick()"></td>
-                        <td><input type="number" class="q-price nav-input" oninput="calcQuick()"></td>
-                        <td class="highlight-col"><input type="text" id="qAvgDisplay" class="res-val" readonly value="0원"></td>
-                        <td><input type="number" id="qMarginInput" class="editable-margin nav-input show-spinner" value="18" min="0" oninput="calcQuick()"></td>
-                        <td class="highlight-col"><input type="text" id="qTargetBuyDisplay" class="res-val" readonly value="0원" style="color:var(--buy-color)"></td>
+                        <td><input type="text" class="input-opt-name nav-input" placeholder="품목명" oninput="saveData()"></td>
+                        <td><input type="number" id="qSellPrice" class="input-discount-sell nav-input" placeholder="0" oninput="calcQuick()"></td>
+                        <td><input type="number" id="qMarginInput" class="editable-margin nav-input show-spinner" value="20" min="0" step="1" oninput="calcQuick()"></td>
+                        <td class="highlight-col"><input type="text" id="qTargetBuyDisplay" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color); font-size:15px; font-weight:800;"></td>
                     </tr>
                 </tbody>
             </table>
@@ -492,17 +489,16 @@
     // 퀵 계산기 로직
     function calcQuick() {
         try {
-            const prices = Array.from(document.querySelectorAll('.q-price')).map(i => Number(i.value) || 0).filter(v => v > 0);
-            const avg = prices.length > 0 ? Math.floor(prices.reduce((a, b) => a + b, 0) / prices.length) : 0;
-            const margin = (Number(document.getElementById('qMarginInput')?.value) || 0) / 100;
-            const returnRate = (Number(document.getElementById('globalReturnRate')?.value) || 3) / 100;
+            const sellPrice = Number(document.getElementById('qSellPrice')?.value) || 0;
+            const margin = (Number(document.getElementById('qMarginInput')?.value) || 20) / 100;
+            const returnRate = (Number(document.getElementById('qReturnRate')?.value) || 3) / 100;
             
-            const qAvgElem = document.getElementById('qAvgDisplay');
             const qTargetBuyElem = document.getElementById('qTargetBuyDisplay');
+            const targetBuy = sellPrice * (1 - FIXED_FEE_RATE - returnRate - margin);
             
-            if (qAvgElem) qAvgElem.value = formatNum(avg) + "원";
-            const targetBuy = avg * (1 - FIXED_FEE_RATE - returnRate - margin);
-            if (qTargetBuyElem) qTargetBuyElem.value = avg > 0 ? formatNum(Math.max(0, targetBuy)) + "원" : "0원";
+            if (qTargetBuyElem) {
+                qTargetBuyElem.value = sellPrice > 0 ? formatNum(Math.max(0, targetBuy)) + "원" : "0원";
+            }
             saveData();
         } catch(e) {
             console.error("calcQuick error:", e);
@@ -512,7 +508,8 @@
     function resetQuickStep() {
         if(!confirm("Quick 계산기를 초기화할까요?")) return;
         document.querySelectorAll('#quickStep input:not([readonly])').forEach(i => {
-            if(i.id === 'qMarginInput') i.value = "18";
+            if(i.id === 'qMarginInput') i.value = "20";
+            else if(i.id === 'qReturnRate') i.value = "3";
             else i.value = "";
         });
         calcQuick();
