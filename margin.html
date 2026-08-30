@@ -172,6 +172,42 @@
         </div>
     </header>
 
+    <!-- QUICK STEP (독립 계산기) -->
+    <div class="section" id="quickStep">
+        <div class="section-title title-sq">
+            <span>⚡ QUICK STEP. 개별 소싱 계산기 (임시 계산용)</span>
+            <button type="button" class="step-reset" onclick="resetQuickStep()" title="Quick Step 초기화">↻</button>
+        </div>
+        <div class="scroll-hint">👉 표를 좌우로 스와이프(밀어서) 전체 항목을 확인하세요</div>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="140">참고 품목명</th>
+                        <th width="65">A</th><th width="65">B</th><th width="65">C</th><th width="65">D</th><th width="65">E</th><th width="65">F</th>
+                        <th width="90" style="color:var(--opt-name-color)">평균가</th>
+                        <th width="100" style="color:var(--text-dim)">목표마진%</th>
+                        <th width="100" style="color:var(--buy-color)">목표 소싱가</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="quick-row">
+                        <td><input type="text" class="input-opt-name nav-input" placeholder="임시 품목명"></td>
+                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
+                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
+                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
+                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
+                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
+                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
+                        <td class="highlight-col"><input type="text" id="qAvgDisplay" class="res-val" readonly value="0원"></td>
+                        <td><input type="text" inputmode="numeric" id="qMarginInput" class="editable-margin nav-input" value="18"></td>
+                        <td class="highlight-col"><input type="text" id="qTargetBuyDisplay" class="res-val" readonly value="0원" style="color:var(--buy-color)"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <!-- STEP 1 -->
     <div class="section" id="step1">
         <div class="section-title title-s1">
@@ -241,42 +277,6 @@
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
                         <td><input type="text" inputmode="numeric" class="row-margin-input editable-margin nav-input col-target-margin" value="18"></td>
                         <td class="highlight-col"><input type="text" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color)"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- QUICK STEP (독립 계산기) -->
-    <div class="section" id="quickStep">
-        <div class="section-title title-sq">
-            <span>⚡ QUICK STEP. 개별 소싱 계산기 (임시 계산용)</span>
-            <button type="button" class="step-reset" onclick="resetQuickStep()" title="Quick Step 초기화">↻</button>
-        </div>
-        <div class="scroll-hint">👉 표를 좌우로 스와이프(밀어서) 전체 항목을 확인하세요</div>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th width="140">참고 품목명</th>
-                        <th width="65">A</th><th width="65">B</th><th width="65">C</th><th width="65">D</th><th width="65">E</th><th width="65">F</th>
-                        <th width="90" style="color:var(--opt-name-color)">평균가</th>
-                        <th width="100" style="color:var(--text-dim)">목표마진%</th>
-                        <th width="100" style="color:var(--buy-color)">목표 소싱가</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="quick-row">
-                        <td><input type="text" class="input-opt-name nav-input" placeholder="임시 품목명"></td>
-                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
-                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
-                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
-                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
-                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
-                        <td><input type="text" inputmode="numeric" class="q-price nav-input"></td>
-                        <td class="highlight-col"><input type="text" id="qAvgDisplay" class="res-val" readonly value="0원"></td>
-                        <td><input type="text" inputmode="numeric" id="qMarginInput" class="editable-margin nav-input" value="18"></td>
-                        <td class="highlight-col"><input type="text" id="qTargetBuyDisplay" class="res-val" readonly value="0원" style="color:var(--buy-color)"></td>
                     </tr>
                 </tbody>
             </table>
