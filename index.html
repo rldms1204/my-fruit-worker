@@ -257,7 +257,7 @@
                     반품율: 
                     <div class="touch-stepper">
                         <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                        <input type="text" inputmode="numeric" pattern="[0-9]*" id="qReturnRate" class="show-spinner nav-input" value="3" oninput="calcQuick()">
+                        <input type="number" inputmode="numeric" id="qReturnRate" class="show-spinner nav-input" value="3" step="1" oninput="calcQuick()">
                         <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                     </div> %
                 </div>
@@ -280,7 +280,7 @@
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" id="qMarginInput" class="editable-margin nav-input show-spinner" value="20" oninput="calcQuick()">
+                                <input type="number" inputmode="numeric" id="qMarginInput" class="editable-margin nav-input show-spinner" value="20" min="0" step="1" oninput="calcQuick()">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -325,7 +325,7 @@
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" oninput="calcAll()">
+                                <input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1" oninput="calcAll()">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -343,7 +343,7 @@
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" oninput="calcAll()">
+                                <input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1" oninput="calcAll()">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -361,7 +361,7 @@
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" oninput="calcAll()">
+                                <input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1" oninput="calcAll()">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -379,7 +379,7 @@
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" oninput="calcAll()">
+                                <input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1" oninput="calcAll()">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -400,7 +400,7 @@
                     반품율: 
                     <div class="touch-stepper">
                         <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                        <input type="text" inputmode="numeric" pattern="[0-9]*" id="globalReturnRate" class="show-spinner nav-input" value="3" oninput="calcAll()">
+                        <input type="number" inputmode="numeric" id="globalReturnRate" class="show-spinner nav-input" value="3" step="1" oninput="calcAll()">
                         <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                     </div> %
                 </div>
@@ -447,7 +447,7 @@
                         <td class="highlight-col">
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" oninput="calcAll('reverse', 1)">
+                                <input type="number" inputmode="numeric" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 1)">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -465,7 +465,7 @@
                         <td class="highlight-col">
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" oninput="calcAll('reverse', 2)">
+                                <input type="number" inputmode="numeric" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 2)">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -483,7 +483,7 @@
                         <td class="highlight-col">
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" oninput="calcAll('reverse', 3)">
+                                <input type="number" inputmode="numeric" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 3)">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -501,7 +501,7 @@
                         <td class="highlight-col">
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" oninput="calcAll('reverse', 4)">
+                                <input type="number" inputmode="numeric" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 4)">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
