@@ -7,7 +7,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="소싱마스터PRO">
     <title>Coupang Sourcing Analysis Master PRO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #09090B;
@@ -16,7 +15,7 @@
             --primary: #00F2FF;
             --step2-theme: #FBFF00;
             --step3-theme: #CF9FFF;
-            --quick-theme: #A1A1AA;
+            --quick-theme: #A1A1AA; /* 퀵 섹션 테마색 */
             --accent: #39FF14;
             --danger: #FF073A;
             --warning: #FBFF00;
@@ -27,28 +26,20 @@
             --opt-name-color: #A1A1AA;
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
+        /* [1] 드래그 및 선택 방지 */
         body {
             user-select: none;
             -webkit-user-drag: none;
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Pretendard', -apple-system, sans-serif;
             background-color: var(--bg);
             color: var(--text);
             margin: 0;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 20px 15px 50px 15px;
+            display: flex; flex-direction: column; align-items: center; padding: 20px 15px 50px 15px;
             min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
         }
         input { user-select: text; } 
 
-        /* [1] 스피너(화살표 증감 버튼) 커스텀 복원 */
+        /* [2] 스피너(화살표) 커스텀 (원본 100% 완벽 복원) */
         input::-webkit-outer-spin-button, 
         input::-webkit-inner-spin-button { 
             -webkit-appearance: none; 
@@ -63,12 +54,11 @@
             background-repeat: no-repeat !important;
             background-position: right 6px center !important;
             background-size: 8px 12px !important;
-            cursor: pointer;
         }
         
         input.show-spinner:hover {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='12' viewBox='0 0 8 12'%3E%3Cpath d='M2 4.5L4 2.5L6 4.5' stroke='%23FFFFFF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cpath d='M2 7.5L4 9.5L6 7.5' stroke='%23FFFFFF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
-            border-color: #555 !important;
+            border-color: #444 !important;
         }
 
         input.show-spinner::-webkit-inner-spin-button {
@@ -93,40 +83,22 @@
             margin: 0; font-size: 26px; 
             background: linear-gradient(90deg, var(--primary), var(--accent));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900;
-            letter-spacing: -0.5px;
         }
         
-        .header-btn-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .btn-action { 
-            padding: 9px 18px; border-radius: 8px; cursor: pointer; font-weight: 800; font-size: 13px; transition: 0.2s;
-        }
-        .btn-calc-now {
-            background: rgba(0, 242, 255, 0.15); color: var(--primary); border: 1.5px solid var(--primary);
-        }
-        .btn-calc-now:hover, .btn-calc-now:active { background: var(--primary); color: #000; }
-
         .reset-btn { 
-            background: rgba(255, 7, 58, 0.08); color: var(--danger); border: 1px solid var(--danger);
+            background: rgba(255, 7, 58, 0.05); color: var(--danger); border: 1px solid var(--danger);
+            padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.2s;
         }
-        .reset-btn:hover, .reset-btn:active { background: var(--danger); color: white; }
+        .reset-btn:hover { background: var(--danger); color: white; }
 
-        .section { 
-            background: var(--card); border-radius: 16px; padding: 25px; border: 1px solid var(--border); 
-            margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); position: relative; 
-        }
+        .section { background: var(--card); border-radius: 16px; padding: 25px; border: 1px solid var(--border); margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); position: relative; }
         .title-s1 { color: var(--primary) !important; }
-        .title-sq { color: var(--quick-theme) !important; opacity: 0.9; }
+        .title-sq { color: var(--quick-theme) !important; opacity: 0.8; } /* 퀵 섹션 제목 스타일 */
         .title-s2 { color: var(--step2-theme) !important; }
         .title-s3 { color: var(--step3-theme) !important; }
 
         .section-title { font-size: 17px; font-weight: 800; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-        .step-reset { cursor: pointer; font-size: 18px; color: var(--text-dim); background: none; border: none; padding: 0 5px; transition: color 0.15s; }
-        .step-reset:hover { color: var(--text); }
+        .step-reset { cursor: pointer; font-size: 18px; color: var(--text-dim); background: none; border: none; padding: 0 5px; }
 
         .table-wrapper { 
             width: 100%; 
@@ -137,46 +109,46 @@
         .table-wrapper::-webkit-scrollbar { height: 6px; }
         .table-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 3px; }
         .table-wrapper::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
-        
+
         table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 900px; }
 
-        .header-input-group { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-dim); margin-left: auto; flex-wrap: wrap; }
+        .header-input-group { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-dim); margin-left: auto; }
         .header-input-group input#productName { 
             background: transparent; border: none; border-bottom: 1px solid var(--border); 
-            width: 260px; max-width: 100%; padding: 5px; color: var(--text); font-size: 15px; font-weight: 600;
+            width: 300px; padding: 5px; color: var(--text); font-size: 15px;
         }
 
         th { background: #1A1A24; color: var(--text-dim); font-size: 11px; padding: 10px 5px; text-align: center; border-bottom: 2px solid var(--border); }
         td { padding: 10px 4px; border-bottom: 1px solid var(--border); text-align: center; }
 
         input { 
-            width: 100%; height: 38px; background: var(--input-bg); border: 1px solid var(--border); 
+            width: 100%; height: 34px; background: var(--input-bg); border: 1px solid var(--border); 
             border-radius: 6px; color: var(--text); padding: 8px 5px; box-sizing: border-box; 
-            font-size: 14px; font-weight: 600; transition: all 0.2s; text-align: center;
+            font-size: 13px; transition: all 0.2s; text-align: center;
         }
-        input:focus { outline: none; background: #252535; border-color: white; box-shadow: 0 0 0 2px rgba(255,255,255,0.1); }
+        input:focus { outline: none; background: #252535; border-color: white; }
         input[readonly] { background: transparent; border-color: transparent; cursor: default; }
 
-        .editable-margin { font-weight: 800; border: 1px dashed rgba(255,255,255,0.3); background: transparent; width: 85px !important; display: inline-block; color: var(--warning); }
+        .editable-margin { font-weight: 800; border: 1px dashed rgba(255,255,255,0.2); background: transparent; width: 85px !important; display: inline-block; }
         .input-sell { border: 1px solid #00D1FF; color: #00D1FF; font-weight: 800; background: rgba(0, 209, 255, 0.05); }
         .input-buy { border: 1px solid var(--buy-color); color: var(--buy-color); font-weight: 800; background: rgba(255, 184, 0, 0.05); }
         .input-discount-sell { border: 1px solid var(--accent); color: var(--accent); font-weight: 800; background: rgba(57, 255, 20, 0.05); }
         .input-opt-name { background: transparent; border: 1px solid transparent; color: var(--opt-name-color); font-weight: 600; text-align: left; }
 
-        .res-val { font-weight: 700; font-size: 13px; color: var(--text); }
+        .res-val { font-weight: 700; font-size: 12px; color: var(--text); }
         .highlight-col { background: rgba(255, 255, 255, 0.02); }
         
         .mini-setting { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-dim); background: #1A1A24; padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border); }
         .mini-setting input { width: 60px; height: 26px; font-weight: bold; color: var(--warning); border: none; background: transparent; text-align: center; }
 
-        .header-summary { display: flex; align-items: center; gap: 12px; margin-left: auto; flex-wrap: wrap; }
+        .header-summary { display: flex; align-items: center; gap: 15px; margin-left: auto; }
         .summary-badge { background: rgba(255, 255, 255, 0.05); padding: 4px 12px; border-radius: 8px; border: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
         .summary-badge .lbl { font-size: 11px; color: var(--text-dim); }
         .summary-badge .val { font-size: 14px; font-weight: 800; }
 
         .scroll-hint { display: none; }
 
-        /* 📱 모바일 / 아이패드 최적화 */
+        /* 📱 모바일 / 아이패드 반응형 */
         @media (max-width: 900px) {
             body { padding: 15px 10px 40px 10px; }
             header h1 { font-size: 20px; }
@@ -202,17 +174,14 @@
 <div class="container">
     <header>
         <h1>Coupang Sourcing Master Pro</h1>
-        <div class="header-btn-group">
-            <button type="button" class="btn-action btn-calc-now" onclick="calcAll(); calcQuick();">⚡ 즉시 계산</button>
-            <button type="button" class="btn-action reset-btn" onclick="resetData()">전체 초기화</button>
-        </div>
+        <button class="reset-btn" onclick="resetData()">전체 초기화</button>
     </header>
 
-    <!-- ⚡ QUICK STEP (독립 계산기 - 최상단 배치) -->
+    <!-- ⚡ QUICK STEP (독립 계산기 - 대표님 요청으로 STEP 1 위로 이동) -->
     <div class="section" id="quickStep">
         <div class="section-title title-sq">
             <span>⚡ QUICK STEP. 개별 소싱 계산기 (임시 계산용)</span>
-            <button type="button" class="step-reset" onclick="resetQuickStep()" title="Quick Step 초기화">↻</button>
+            <button class="step-reset" onclick="resetQuickStep()" title="Quick Step 초기화">↻</button>
         </div>
         <div class="scroll-hint">👉 표를 좌우로 스와이프(밀어서) 전체 항목을 확인하세요</div>
         <div class="table-wrapper">
@@ -228,15 +197,15 @@
                 </thead>
                 <tbody>
                     <tr class="quick-row">
-                        <td><input type="text" class="input-opt-name nav-input" placeholder="임시 품목명"></td>
-                        <td><input type="number" inputmode="numeric" class="q-price nav-input"></td>
-                        <td><input type="number" inputmode="numeric" class="q-price nav-input"></td>
-                        <td><input type="number" inputmode="numeric" class="q-price nav-input"></td>
-                        <td><input type="number" inputmode="numeric" class="q-price nav-input"></td>
-                        <td><input type="number" inputmode="numeric" class="q-price nav-input"></td>
-                        <td><input type="number" inputmode="numeric" class="q-price nav-input"></td>
+                        <td><input type="text" class="input-opt-name nav-input" placeholder="임시 품목명" oninput="saveData()"></td>
+                        <td><input type="number" class="q-price nav-input" oninput="calcQuick()"></td>
+                        <td><input type="number" class="q-price nav-input" oninput="calcQuick()"></td>
+                        <td><input type="number" class="q-price nav-input" oninput="calcQuick()"></td>
+                        <td><input type="number" class="q-price nav-input" oninput="calcQuick()"></td>
+                        <td><input type="number" class="q-price nav-input" oninput="calcQuick()"></td>
+                        <td><input type="number" class="q-price nav-input" oninput="calcQuick()"></td>
                         <td class="highlight-col"><input type="text" id="qAvgDisplay" class="res-val" readonly value="0원"></td>
-                        <td><input type="number" inputmode="numeric" id="qMarginInput" class="editable-margin nav-input show-spinner" value="18" min="0" step="1"></td>
+                        <td><input type="number" id="qMarginInput" class="editable-margin nav-input show-spinner" value="18" min="0" oninput="calcQuick()"></td>
                         <td class="highlight-col"><input type="text" id="qTargetBuyDisplay" class="res-val" readonly value="0원" style="color:var(--buy-color)"></td>
                     </tr>
                 </tbody>
@@ -248,9 +217,9 @@
     <div class="section" id="step1">
         <div class="section-title title-s1">
             <span>📊 STEP 1. 시장 판매가 분석</span>
-            <button type="button" class="step-reset" onclick="resetStep(1)" title="Step 1 초기화">↻</button>
+            <button class="step-reset" onclick="resetStep(1)" title="Step 1 초기화">↻</button>
             <div class="header-input-group">
-                소싱 품목명: <input type="text" id="productName" placeholder="소싱할 품목명을 입력하세요">
+                소싱 품목명: <input type="text" id="productName" class="nav-input" placeholder="소싱할 품목명을 입력하세요" oninput="saveData()">
             </div>
         </div>
         <div class="scroll-hint">👉 표를 좌우로 스와이프(밀어서) 전체 항목을 확인하세요</div>
@@ -267,51 +236,51 @@
                 </thead>
                 <tbody id="sourcingBody">
                     <tr class="sourcing-row" data-id="1">
-                        <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 1"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-a"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-b"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-c"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-d"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-e"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-f"></td>
+                        <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 1" oninput="syncNames()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-a" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-b" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-c" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-d" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
-                        <td><input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1"></td>
+                        <td><input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color)"></td>
                     </tr>
                     <tr class="sourcing-row" data-id="2">
-                        <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 2"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-a"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-b"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-c"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-d"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-e"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-f"></td>
+                        <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 2" oninput="syncNames()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-a" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-b" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-c" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-d" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
-                        <td><input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1"></td>
+                        <td><input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color)"></td>
                     </tr>
                     <tr class="sourcing-row" data-id="3">
-                        <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 3"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-a"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-b"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-c"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-d"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-e"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-f"></td>
+                        <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 3" oninput="syncNames()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-a" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-b" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-c" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-d" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
-                        <td><input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1"></td>
+                        <td><input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color)"></td>
                     </tr>
                     <tr class="sourcing-row" data-id="4">
-                        <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 4"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-a"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-b"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-c"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-d"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-e"></td>
-                        <td><input type="number" inputmode="numeric" class="comp-price nav-input col-s1-f"></td>
+                        <td><input type="text" class="input-opt-name opt-name-input nav-input col-opt-name" value="옵션 4" oninput="syncNames()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-a" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-b" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-c" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-d" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-e" oninput="calcAll()"></td>
+                        <td><input type="number" class="comp-price nav-input col-s1-f" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val avg-price-display" readonly value="0원"></td>
-                        <td><input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1"></td>
+                        <td><input type="number" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" oninput="calcAll()"></td>
                         <td class="highlight-col"><input type="text" class="res-val target-buy-val" readonly value="0원" style="color:var(--buy-color)"></td>
                     </tr>
                 </tbody>
@@ -324,9 +293,9 @@
         <div class="section-title title-s2">
             <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
                 <span>💰 STEP 2. 실전 마진 시뮬레이션</span>
-                <button type="button" class="step-reset" onclick="resetStep(2)" title="Step 2 초기화">↻</button>
+                <button class="step-reset" onclick="resetStep(2)" title="Step 2 초기화">↻</button>
                 <div class="mini-setting">
-                    반품율: <input type="number" inputmode="numeric" id="globalReturnRate" class="show-spinner" value="3" step="1"> %
+                    반품율: <input type="number" id="globalReturnRate" class="show-spinner nav-input" value="3" step="1" oninput="calcAll()"> %
                 </div>
             </div>
             <div class="header-summary">
@@ -360,58 +329,58 @@
                 <tbody id="marginBody">
                     <tr class="margin-row" data-id="1">
                         <td class="input-opt-name margin-opt-label" id="margin-label-1">옵션 1</td>
-                        <td><input type="number" inputmode="numeric" class="input-buy my-buy nav-input col-buy"></td>
-                        <td><input type="number" inputmode="numeric" class="input-discount-sell my-discount-sell nav-input col-final"></td>
-                        <td><input type="number" inputmode="numeric" class="input-sell my-sell nav-input col-sell"></td>
-                        <td><input type="number" inputmode="numeric" class="my-coupon nav-input col-coupon" value="0"></td>
+                        <td><input type="number" class="input-buy my-buy nav-input col-buy" oninput="calcAll('forward', 1)"></td>
+                        <td><input type="number" class="input-discount-sell my-discount-sell nav-input col-final" oninput="calcByFinalPrice(1)"></td>
+                        <td><input type="number" class="input-sell my-sell nav-input col-sell" oninput="calcByListPrice(1)"></td>
+                        <td><input type="number" class="my-coupon nav-input col-coupon" value="0" oninput="calcByCoupon(1)"></td>
                         <td><input type="text" class="res-val my-return-display" readonly value="0원"></td>
-                        <td><input type="number" inputmode="numeric" class="my-ad nav-input col-ad" value="0"></td>
+                        <td><input type="number" class="my-ad nav-input col-ad" value="0" oninput="calcAll('forward', 1)"></td>
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
-                            <input type="number" inputmode="decimal" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" value="0.0" step="1">
+                            <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 1)">
                         </td>
                     </tr>
                     <tr class="margin-row" data-id="2">
                         <td class="input-opt-name margin-opt-label" id="margin-label-2">옵션 2</td>
-                        <td><input type="number" inputmode="numeric" class="input-buy my-buy nav-input col-buy"></td>
-                        <td><input type="number" inputmode="numeric" class="input-discount-sell my-discount-sell nav-input col-final"></td>
-                        <td><input type="number" inputmode="numeric" class="input-sell my-sell nav-input col-sell"></td>
-                        <td><input type="number" inputmode="numeric" class="my-coupon nav-input col-coupon" value="0"></td>
+                        <td><input type="number" class="input-buy my-buy nav-input col-buy" oninput="calcAll('forward', 2)"></td>
+                        <td><input type="number" class="input-discount-sell my-discount-sell nav-input col-final" oninput="calcByFinalPrice(2)"></td>
+                        <td><input type="number" class="input-sell my-sell nav-input col-sell" oninput="calcByListPrice(2)"></td>
+                        <td><input type="number" class="my-coupon nav-input col-coupon" value="0" oninput="calcByCoupon(2)"></td>
                         <td><input type="text" class="res-val my-return-display" readonly value="0원"></td>
-                        <td><input type="number" inputmode="numeric" class="my-ad nav-input col-ad" value="0"></td>
+                        <td><input type="number" class="my-ad nav-input col-ad" value="0" oninput="calcAll('forward', 2)"></td>
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
-                            <input type="number" inputmode="decimal" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" value="0.0" step="1">
+                            <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 2)">
                         </td>
                     </tr>
                     <tr class="margin-row" data-id="3">
                         <td class="input-opt-name margin-opt-label" id="margin-label-3">옵션 3</td>
-                        <td><input type="number" inputmode="numeric" class="input-buy my-buy nav-input col-buy"></td>
-                        <td><input type="number" inputmode="numeric" class="input-discount-sell my-discount-sell nav-input col-final"></td>
-                        <td><input type="number" inputmode="numeric" class="input-sell my-sell nav-input col-sell"></td>
-                        <td><input type="number" inputmode="numeric" class="my-coupon nav-input col-coupon" value="0"></td>
+                        <td><input type="number" class="input-buy my-buy nav-input col-buy" oninput="calcAll('forward', 3)"></td>
+                        <td><input type="number" class="input-discount-sell my-discount-sell nav-input col-final" oninput="calcByFinalPrice(3)"></td>
+                        <td><input type="number" class="input-sell my-sell nav-input col-sell" oninput="calcByListPrice(3)"></td>
+                        <td><input type="number" class="my-coupon nav-input col-coupon" value="0" oninput="calcByCoupon(3)"></td>
                         <td><input type="text" class="res-val my-return-display" readonly value="0원"></td>
-                        <td><input type="number" inputmode="numeric" class="my-ad nav-input col-ad" value="0"></td>
+                        <td><input type="number" class="my-ad nav-input col-ad" value="0" oninput="calcAll('forward', 3)"></td>
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
-                            <input type="number" inputmode="decimal" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" value="0.0" step="1">
+                            <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 3)">
                         </td>
                     </tr>
                     <tr class="margin-row" data-id="4">
                         <td class="input-opt-name margin-opt-label" id="margin-label-4">옵션 4</td>
-                        <td><input type="number" inputmode="numeric" class="input-buy my-buy nav-input col-buy"></td>
-                        <td><input type="number" inputmode="numeric" class="input-discount-sell my-discount-sell nav-input col-final"></td>
-                        <td><input type="number" inputmode="numeric" class="input-sell my-sell nav-input col-sell"></td>
-                        <td><input type="number" inputmode="numeric" class="my-coupon nav-input col-coupon" value="0"></td>
+                        <td><input type="number" class="input-buy my-buy nav-input col-buy" oninput="calcAll('forward', 4)"></td>
+                        <td><input type="number" class="input-discount-sell my-discount-sell nav-input col-final" oninput="calcByFinalPrice(4)"></td>
+                        <td><input type="number" class="input-sell my-sell nav-input col-sell" oninput="calcByListPrice(4)"></td>
+                        <td><input type="number" class="my-coupon nav-input col-coupon" value="0" oninput="calcByCoupon(4)"></td>
                         <td><input type="text" class="res-val my-return-display" readonly value="0원"></td>
-                        <td><input type="number" inputmode="numeric" class="my-ad nav-input col-ad" value="0"></td>
+                        <td><input type="number" class="my-ad nav-input col-ad" value="0" oninput="calcAll('forward', 4)"></td>
                         <td><input type="text" class="res-val fee-display" readonly value="0원"></td>
                         <td class="highlight-col"><input type="text" class="res-val profit-display" readonly value="0원"></td>
                         <td class="highlight-col">
-                            <input type="number" inputmode="decimal" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" value="0.0" step="1">
+                            <input type="number" class="margin-rate-val editable-margin nav-input show-spinner col-margin-rate" step="1" oninput="calcAll('reverse', 4)">
                         </td>
                     </tr>
                 </tbody>
@@ -425,7 +394,7 @@
             <span>🚀 STEP 3. 고급 전략 분석 패널</span>
             <div class="header-input-group">
                 목표 초기 마케팅 비용: 
-                <input type="number" inputmode="numeric" id="targetMktBudget" class="nav-input" value="100000">
+                <input type="number" id="targetMktBudget" class="nav-input" value="100000" oninput="calcAll()">
                 <span style="font-size:12px; margin-left:-5px;">원</span>
             </div>
         </div>
@@ -473,27 +442,14 @@
 
 <script>
     const FIXED_FEE_RATE = 0.1166;
+    function formatNum(num) { return Math.floor(num || 0).toLocaleString(); }
 
-    // 강력한 숫자 파서 (쉼표, 특수문자, 공백 완벽 정제)
-    function parseNum(val) {
-        if (val === null || val === undefined) return 0;
-        if (typeof val === 'number') return isNaN(val) ? 0 : val;
-        const clean = String(val).replace(/[^0-9.-]/g, '').trim();
-        const num = parseFloat(clean);
-        return isNaN(num) ? 0 : num;
-    }
-
-    function formatNum(num) {
-        const val = Math.floor(parseNum(num));
-        return val.toLocaleString();
-    }
-
-    // 마우스 휠 숫자 임의 변경 방지
+    // 마우스 휠 방지
     document.addEventListener('wheel', function(e) {
         if (e.target.tagName === 'INPUT' && e.target.type === 'number') e.preventDefault();
     }, { passive: false });
 
-    // ⌨️ 키보드 상/하/좌/우 엑셀식 내비게이션 복원
+    // ⌨️ 키보드 내비게이션 (상/하/좌/우 셀 이동 완벽 작동)
     document.addEventListener('keydown', function(e) {
         const target = e.target;
         if (target.tagName !== 'INPUT') return;
@@ -517,7 +473,7 @@
         }
     });
 
-    // 🎯 클릭(포커스) 시 자동 전체 선택 (빠른 타이핑 복원)
+    // 🎯 포커스 시 자동 전체 선택 (마우스 클릭 시 즉시 선택)
     document.addEventListener('focusin', function(e) {
         if (e.target.tagName === 'INPUT' && !e.target.readOnly) {
             setTimeout(() => { 
@@ -525,14 +481,21 @@
             }, 0);
         }
     });
+    document.addEventListener('mouseup', function(e) {
+        if (e.target.tagName === 'INPUT' && !e.target.readOnly) {
+            if (document.activeElement === e.target && e.target.selectionStart === e.target.selectionEnd) {
+                e.target.select();
+            }
+        }
+    });
 
     // 퀵 계산기 로직
     function calcQuick() {
         try {
-            const prices = Array.from(document.querySelectorAll('.q-price')).map(i => parseNum(i.value)).filter(v => v > 0);
+            const prices = Array.from(document.querySelectorAll('.q-price')).map(i => Number(i.value) || 0).filter(v => v > 0);
             const avg = prices.length > 0 ? Math.floor(prices.reduce((a, b) => a + b, 0) / prices.length) : 0;
-            const margin = parseNum(document.getElementById('qMarginInput')?.value || 18) / 100;
-            const returnRate = parseNum(document.getElementById('globalReturnRate')?.value || 3) / 100;
+            const margin = (Number(document.getElementById('qMarginInput')?.value) || 0) / 100;
+            const returnRate = (Number(document.getElementById('globalReturnRate')?.value) || 3) / 100;
             
             const qAvgElem = document.getElementById('qAvgDisplay');
             const qTargetBuyElem = document.getElementById('qTargetBuyDisplay');
@@ -562,7 +525,7 @@
                 const id = index + 1;
                 const t2 = document.getElementById(`margin-label-${id}`);
                 const t3 = document.getElementById(`strat-label-${id}`);
-                const name = input.value.trim() || `옵션 ${id}`;
+                const name = input.value || `옵션 ${id}`;
                 if (t2) t2.innerText = name;
                 if (t3) t3.innerText = name;
             });
@@ -575,8 +538,8 @@
     function calcByFinalPrice(id) {
         const row = document.querySelector(`.margin-row[data-id="${id}"]`);
         if (!row) return;
-        const finalPrice = parseNum(row.querySelector('.my-discount-sell')?.value);
-        const coupon = parseNum(row.querySelector('.my-coupon')?.value);
+        const finalPrice = Number(row.querySelector('.my-discount-sell')?.value) || 0;
+        const coupon = Number(row.querySelector('.my-coupon')?.value) || 0;
         const sellInput = row.querySelector('.my-sell');
         if (sellInput) sellInput.value = finalPrice + coupon;
         calcAll('forward', id);
@@ -585,8 +548,8 @@
     function calcByCoupon(id) {
         const row = document.querySelector(`.margin-row[data-id="${id}"]`);
         if (!row) return;
-        const finalPrice = parseNum(row.querySelector('.my-discount-sell')?.value);
-        const coupon = parseNum(row.querySelector('.my-coupon')?.value);
+        const finalPrice = Number(row.querySelector('.my-discount-sell')?.value) || 0;
+        const coupon = Number(row.querySelector('.my-coupon')?.value) || 0;
         const sellInput = row.querySelector('.my-sell');
         if (sellInput) sellInput.value = finalPrice + coupon;
         calcAll('forward', id);
@@ -595,8 +558,8 @@
     function calcByListPrice(id) {
         const row = document.querySelector(`.margin-row[data-id="${id}"]`);
         if (!row) return;
-        const listPrice = parseNum(row.querySelector('.my-sell')?.value);
-        const coupon = parseNum(row.querySelector('.my-coupon')?.value);
+        const listPrice = Number(row.querySelector('.my-sell')?.value) || 0;
+        const coupon = Number(row.querySelector('.my-coupon')?.value) || 0;
         const discountInput = row.querySelector('.my-discount-sell');
         if (discountInput) discountInput.value = Math.max(0, listPrice - coupon);
         calcAll('forward', id);
@@ -604,20 +567,20 @@
 
     function calcAll(mode = 'forward', targetId = null) {
         try {
-            const returnRateDec = parseNum(document.getElementById('globalReturnRate')?.value || 3) / 100;
-            const targetMktBudget = parseNum(document.getElementById('targetMktBudget')?.value || 100000);
+            const returnRateDec = (Number(document.getElementById('globalReturnRate')?.value) || 0) / 100;
+            const targetMktBudget = Number(document.getElementById('targetMktBudget')?.value) || 0;
             let marginSum = 0, activeRows = 0, bestMargin = -999, bestOptName = "-";
             const marketAvgs = [];
 
             // STEP 1 계산
             document.querySelectorAll('.sourcing-row').forEach((row, idx) => {
                 const comps = [
-                    parseNum(row.querySelector('.col-s1-a')?.value),
-                    parseNum(row.querySelector('.col-s1-b')?.value),
-                    parseNum(row.querySelector('.col-s1-c')?.value),
-                    parseNum(row.querySelector('.col-s1-d')?.value),
-                    parseNum(row.querySelector('.col-s1-e')?.value),
-                    parseNum(row.querySelector('.col-s1-f')?.value)
+                    Number(row.querySelector('.col-s1-a')?.value) || 0,
+                    Number(row.querySelector('.col-s1-b')?.value) || 0,
+                    Number(row.querySelector('.col-s1-c')?.value) || 0,
+                    Number(row.querySelector('.col-s1-d')?.value) || 0,
+                    Number(row.querySelector('.col-s1-e')?.value) || 0,
+                    Number(row.querySelector('.col-s1-f')?.value) || 0
                 ].filter(v => v > 0);
 
                 const avg = comps.length > 0 ? Math.floor(comps.reduce((a, b) => a + b, 0) / comps.length) : 0;
@@ -625,7 +588,7 @@
                 const avgDisplay = row.querySelector('.avg-price-display');
                 if (avgDisplay) avgDisplay.value = formatNum(avg) + "원";
                 
-                const rowMarginVal = parseNum(row.querySelector('.row-margin-input')?.value || 18);
+                const rowMarginVal = Number(row.querySelector('.row-margin-input')?.value) || 0;
                 const targetBuy = avg * (1 - FIXED_FEE_RATE - returnRateDec - (rowMarginVal / 100));
                 const targetBuyElem = row.querySelector('.target-buy-val');
                 if (targetBuyElem) targetBuyElem.value = avg > 0 ? formatNum(Math.max(0, targetBuy)) + "원" : "0원";
@@ -634,16 +597,16 @@
             // STEP 2 계산
             document.querySelectorAll('.margin-row').forEach((row, idx) => {
                 const id = parseInt(row.getAttribute('data-id'));
-                const buy = parseNum(row.querySelector('.my-buy')?.value);
-                const ad = parseNum(row.querySelector('.my-ad')?.value);
+                const buy = Number(row.querySelector('.my-buy')?.value) || 0;
+                const ad = Number(row.querySelector('.my-ad')?.value) || 0;
                 let sellInput = row.querySelector('.my-sell');
                 let couponInput = row.querySelector('.my-coupon');
                 let discountInput = row.querySelector('.my-discount-sell');
                 let marginRateInput = row.querySelector('.margin-rate-val');
 
                 if (mode === 'reverse' && id === targetId) {
-                    const targetM = parseNum(marginRateInput?.value) / 100;
-                    const coupon = parseNum(couponInput?.value);
+                    const targetM = (Number(marginRateInput?.value) || 0) / 100;
+                    const coupon = Number(couponInput?.value) || 0;
                     const denominator = 1 - FIXED_FEE_RATE - returnRateDec - targetM;
                     if (denominator > 0) {
                         const finalD = Math.ceil((buy + ad + (coupon * FIXED_FEE_RATE)) / denominator);
@@ -652,8 +615,8 @@
                     }
                 }
 
-                const listPrice = parseNum(sellInput?.value);
-                const finalPrice = parseNum(discountInput?.value);
+                const listPrice = Number(sellInput?.value) || 0;
+                const finalPrice = Number(discountInput?.value) || 0;
                 const fee = Math.floor(listPrice * FIXED_FEE_RATE);
                 const returnLoss = Math.floor(finalPrice * returnRateDec);
                 const profit = finalPrice - buy - fee - ad - returnLoss;
@@ -671,11 +634,12 @@
                 }
                 
                 if (mode !== 'reverse' || id !== targetId) {
-                    if (marginRateInput) {
-                        marginRateInput.value = marginRate;
-                        const mRateNum = parseFloat(marginRate);
-                        marginRateInput.style.color = mRateNum < 15 ? "var(--danger)" : (mRateNum > 20 ? "var(--primary)" : "var(--accent)");
-                    }
+                    if (marginRateInput) marginRateInput.value = marginRate;
+                }
+
+                if (marginRateInput) {
+                    const mRateNum = Number(marginRate);
+                    marginRateInput.style.color = mRateNum < 15 ? "var(--danger)" : (mRateNum > 20 ? "var(--primary)" : "var(--accent)");
                 }
 
                 // STEP 3 동기화
@@ -708,10 +672,10 @@
                 }
 
                 if(finalPrice > 0) {
-                    marginSum += parseFloat(marginRate); 
+                    marginSum += Number(marginRate); 
                     activeRows++;
-                    if(parseFloat(marginRate) > bestMargin) { 
-                        bestMargin = parseFloat(marginRate); 
+                    if(Number(marginRate) > bestMargin) { 
+                        bestMargin = Number(marginRate); 
                         const labelElem = document.getElementById(`margin-label-${id}`);
                         bestOptName = labelElem ? labelElem.innerText : `옵션 ${id}`; 
                     }
@@ -734,12 +698,12 @@
         const section = document.querySelectorAll('.section')[stepNum === 1 ? 1 : (stepNum === 2 ? 2 : 3)];
         if (!section) return;
         section.querySelectorAll('input:not([readonly])').forEach(input => {
-            if(input.classList.contains('row-margin-input')) input.value = "18";
-            else if(input.id === 'globalReturnRate') input.value = "3";
-            else if(input.id === 'targetMktBudget') input.value = "100000";
+            if(input.classList.contains('row-margin-input')) input.value = 18;
+            else if(input.id === 'globalReturnRate') input.value = 3;
+            else if(input.id === 'targetMktBudget') input.value = 100000;
             else if(!input.classList.contains('opt-name-input')) input.value = "";
         });
-        if(stepNum === 2) section.querySelectorAll('.my-coupon, .my-ad').forEach(i => i.value = "0");
+        if(stepNum === 2) section.querySelectorAll('.my-coupon, .my-ad').forEach(i => i.value = 0);
         calcAll();
     }
 
@@ -779,37 +743,6 @@
         calcAll(); 
         calcQuick();
     }
-
-    // 🌟 모바일 및 PC 통합 이벤트 리스너
-    document.addEventListener('input', (e) => {
-        const target = e.target;
-        if (!target || target.tagName !== 'INPUT') return;
-        
-        if (target.classList.contains('opt-name-input')) {
-            syncNames();
-        } else if (target.classList.contains('q-price') || target.id === 'qMarginInput') {
-            calcQuick();
-        } else if (target.classList.contains('col-final')) {
-            const id = target.closest('.margin-row')?.getAttribute('data-id');
-            if (id) calcByFinalPrice(id);
-        } else if (target.classList.contains('col-sell')) {
-            const id = target.closest('.margin-row')?.getAttribute('data-id');
-            if (id) calcByListPrice(id);
-        } else if (target.classList.contains('col-coupon')) {
-            const id = target.closest('.margin-row')?.getAttribute('data-id');
-            if (id) calcByCoupon(id);
-        } else if (target.classList.contains('col-margin-rate')) {
-            const id = target.closest('.margin-row')?.getAttribute('data-id');
-            if (id) calcAll('reverse', parseInt(id));
-        } else {
-            calcAll();
-        }
-    });
-
-    document.addEventListener('change', () => {
-        calcAll();
-        calcQuick();
-    });
 
     window.addEventListener('DOMContentLoaded', () => {
         loadData();
