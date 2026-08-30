@@ -325,7 +325,7 @@
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1" oninput="calcAll()">
+                                <input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="20" min="0" step="1" oninput="calcAll()">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -343,7 +343,7 @@
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1" oninput="calcAll()">
+                                <input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="20" min="0" step="1" oninput="calcAll()">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -361,7 +361,7 @@
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1" oninput="calcAll()">
+                                <input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="20" min="0" step="1" oninput="calcAll()">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -379,7 +379,7 @@
                         <td>
                             <div class="touch-stepper">
                                 <button type="button" class="btn-step" onclick="stepVal(this, -1)">-</button>
-                                <input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="18" min="0" step="1" oninput="calcAll()">
+                                <input type="number" inputmode="numeric" class="row-margin-input editable-margin nav-input show-spinner col-target-margin" value="20" min="0" step="1" oninput="calcAll()">
                                 <button type="button" class="btn-step" onclick="stepVal(this, 1)">+</button>
                             </div>
                         </td>
@@ -831,7 +831,7 @@
         const section = document.querySelectorAll('.section')[stepNum === 1 ? 1 : (stepNum === 2 ? 2 : 3)];
         if (!section) return;
         section.querySelectorAll('input:not([readonly])').forEach(input => {
-            if(input.classList.contains('row-margin-input')) input.value = 18;
+            if(input.classList.contains('row-margin-input')) input.value = 20;
             else if(input.id === 'globalReturnRate') input.value = 3;
             else if(input.id === 'targetMktBudget') input.value = 100000;
             else if(!input.classList.contains('opt-name-input')) input.value = "";
